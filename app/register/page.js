@@ -662,7 +662,8 @@ export default function Register() {
         phone_number: "",
         last_college: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        singup_type: "normal"
     });
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);

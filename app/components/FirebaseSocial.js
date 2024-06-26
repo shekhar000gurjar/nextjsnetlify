@@ -1,34 +1,128 @@
 
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import Image from 'next/image'
-import Link from 'next/link';
-// assets
-// import Google from './assets/icons/google.svg';
-// import Twitter from 'assets/icons/twitter.svg';
-// import Facebook from 'assets/icons/facebook.svg';
+// import Button from '@mui/material/Button';
+// import Stack from '@mui/material/Stack';
+// import Image from 'next/image'
+// import Link from 'next/link';
+// // assets
+// // import Google from './assets/icons/google.svg';
+// // import Twitter from 'assets/icons/twitter.svg';
+// // import Facebook from 'assets/icons/facebook.svg';
 
-// import { ReactComponent as Google } from '../assets/icons/google.svg'
-// import Twitter from '/images/icons/google.svg'
-// import Facebook from '../assets/icons/facebook.svg'
+// // import { ReactComponent as Google } from '../assets/icons/google.svg'
+// // import Twitter from '/images/icons/google.svg'
+// // import Facebook from '../assets/icons/facebook.svg'
+
+// export default function FirebaseSocial() {
+//     // const downSM = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+//     return (
+//         <Stack
+//             direction="row"
+//             spacing={{ xs: 1, sm: 2 }}
+//             justifyContent={{ xs: 'space-around', sm: 'space-between' }}
+//             sx={{ '& .MuiButton-startIcon': { mr: { xs: 0, sm: 1 }, ml: { xs: 0, sm: -0.5 } } }}
+//         >
+
+
+//             <Button
+//                 variant="outlined"
+//                 color="primary"
+//                 fullWidth
+//                 startIcon={<img src='/images/icons/google.svg' alt="Twitter" />}
+//                 component={Link} href="https://www.google.co.in/" 
+//             >
+//                 Google
+//             </Button>
+//             <Button
+//                 variant="outlined"
+//                 color="primary"
+//                 fullWidth
+//                 startIcon={<img src='/images/icons/linkedin.svg' alt="linkedin" />}
+//                 sx={{marginTop: '-5px'}}
+//                 component={Link} href="https://www.linkedin.com/feed/" 
+//             >
+//                 {'Linkedin'}
+//             </Button>
+//             <Button
+//                 variant="outlined"
+//                 color="primary"
+//                 fullWidth
+//                 startIcon={<img src='/images/icons/facebook.svg' alt="Facebook" />}
+//                 component={Link} href="https://www.facebook.com/" 
+//             >
+//                 {'Facebook'}
+//             </Button>
+
+//         </Stack>
+//     )
+// }
+
+//---------------------------------------------------------------------------------------------
+
+// React component for social media buttons
+"use client";
+import React, { useState } from 'react';
+import { Button, Stack } from '@mui/material';
+import { signInWithGoogle, signInWithFacebook, signInWithLinkedIn } from './auth-services';
 
 export default function FirebaseSocial() {
-    // const downSM = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
+    const [useData, setUserData] = useState({})
+
+    const handleLogin = async (singup_type) => {
+        try {
+            const response = await postResponse("/api/login", { ...useData, ...singup_type });
+            console.log(response, "res");
+        } catch (error) {
+            console.log(error, "err")
+        }
+    }
+
+    const handleGoogelLogin = async () => {
+        try {
+            const googleData = await signInWithGoogle();
+            if (googleData) {
+                console.log(googleData, "google");
+            }
+        } catch (error) {
+            console.log(error, "err")
+        }
+    }
+
+
+    const handleFacebookLogin = async () => {
+        try {
+            const facebookData = await signInWithFacebook();
+            if (facebookData) {
+                console.log(facebookData, "facebook");
+            }
+        } catch (error) {
+            console.log(error, "err")
+        }
+    }
+
+    const handleLinkedInLogin = async () => {
+        try {
+            const linkedInData = await signInWithLinkedIn();
+            if (linkedInData) {
+                console.log(linkedInData, "LinkedIn");
+            }
+        } catch (error) {
+            console.log(error, "err")
+        }
+    }
+
     return (
         <Stack
             direction="row"
             spacing={{ xs: 1, sm: 2 }}
             justifyContent={{ xs: 'space-around', sm: 'space-between' }}
-            sx={{ '& .MuiButton-startIcon': { mr: { xs: 0, sm: 1 }, ml: { xs: 0, sm: -0.5 } } }}
         >
-
-
             <Button
                 variant="outlined"
                 color="primary"
                 fullWidth
-                startIcon={<img src='/images/icons/google.svg' alt="Twitter" />}
-                component={Link} href="https://www.google.co.in/" 
+                startIcon={<img src='/images/icons/google.svg' alt="Google" />}
+                onClick={handleGoogelLogin}
             >
                 Google
             </Button>
@@ -36,22 +130,20 @@ export default function FirebaseSocial() {
                 variant="outlined"
                 color="primary"
                 fullWidth
-                startIcon={<img src='/images/icons/linkedin.svg' alt="linkedin" />}
-                sx={{marginTop: '-5px'}}
-                component={Link} href="https://www.linkedin.com/feed/" 
+                startIcon={<img src='/images/icons/linkedin.svg' alt="LinkedIn" />}
+                onClick={handleLinkedInLogin} // Placeholder function
             >
-                {'Linkedin'}
+                LinkedIn
             </Button>
             <Button
                 variant="outlined"
                 color="primary"
                 fullWidth
                 startIcon={<img src='/images/icons/facebook.svg' alt="Facebook" />}
-                component={Link} href="https://www.facebook.com/" 
+                onClick={handleFacebookLogin}
             >
-                {'Facebook'}
+                Facebook
             </Button>
-
         </Stack>
     )
 }

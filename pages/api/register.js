@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   const { method } = req;
 
   if (method === "POST") {
-    const { first_name, last_name, email, password, phone_number, company_name, company_email, position, current_location, last_college } = req.body;
+    const { first_name, last_name, email, password, phone_number, company_name, company_email, position, current_location, last_college,singup_type } = req.body;
 
     try {
       // Check if the user already exists
@@ -31,6 +31,7 @@ export default async function handler(req, res) {
         email,
         password: hashedPassword,
         phone_number,
+        singup_type,
       });
 
       const savedUser = await newUser.save();

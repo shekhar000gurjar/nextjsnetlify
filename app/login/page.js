@@ -135,6 +135,7 @@ export default function Login() {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
+        singup_type: "normal"
     });
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
@@ -186,9 +187,9 @@ export default function Login() {
 
     const usersList = async () => {
         try {
-            
+
             const response = await allUsers();
-            console.log(response,"response");
+            console.log(response, "response");
 
         } catch (error) {
             setUsersDetails([])
