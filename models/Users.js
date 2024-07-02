@@ -41,6 +41,10 @@ const usersSchema = new mongoose.Schema(
             ref: 'CompaniesDetails',
             // required: true
         },
+        upi_id: {
+            type: String,
+            default: ''
+        },
         singup_type: {
             type: String,
             defalut: ''

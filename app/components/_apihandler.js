@@ -32,3 +32,20 @@ export const deleteResponse = async (endpoint, data) => {
     const response = await axios.delete(endpoint, { data });
     return response;
 };
+
+export const putRequest = async (endpoint, data) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    };
+
+    const response = await axios.put(endpoint, data, config);
+    return response;
+};
