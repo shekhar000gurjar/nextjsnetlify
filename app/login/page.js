@@ -284,7 +284,7 @@ export default function Login() {
                                             placeholder="Enter your password"
                                             endAdornment={
                                                 <IconButton onClick={togglePasswordVisibility} edge="end">
-                                                    {passwordVisibility ? <VisibilityOff /> : <Visibility />}
+                                                    {passwordVisibility ? <Visibility /> : <VisibilityOff />}
                                                 </IconButton>
                                             }
                                         />
@@ -306,9 +306,9 @@ export default function Login() {
 
                                         <Typography component={Link} href="forgotPassword" variant="subtitle2" color='text.secondary'>Forgot Password?</Typography>
                                     </Stack>
+                                    <Typography component={Link} href="register" variant="subtitle2" color='text.primary'>New User? register here</Typography>
                                     <Stack direction="row" spacing={2} mt={3}>
                                         <LoadingButton loading={loading} variant="contained" fullWidth type="submit">Login</LoadingButton>
-                                        <Button component={Link} href="register" variant="contained" fullWidth>Register</Button>
                                     </Stack>
                                 </Box>
                                 <Box my={4}>
@@ -336,10 +336,10 @@ export default function Login() {
                                     </Paper>
                                 </Stack>
                                 <ul className="company-list" id="company-list">
-                                    <li>John Doe - Google</li>
-                                    <li>Jane Smith - Microsoft</li>
-                                    <li>Michael Johnson - Amazon</li>
-                                    <li>Emily Davis - Apple</li>
+                                    <li>Google</li>
+                                    <li>Microsoft</li>
+                                    <li>Amazon</li>
+                                    <li>Apple</li>
                                 </ul>
                             </Paper>
                         </Grid>

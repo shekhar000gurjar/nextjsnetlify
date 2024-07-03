@@ -13,9 +13,9 @@ export default async function handler(req, res) {
             params: {
                 grant_type: 'authorization_code',
                 code: code,
-                redirect_uri: process.env.NEXT_LINKEDIN_REDIRECT_URI,
-                client_id: process.env.NEXT_LINKEDIN_CLIENT_ID,
-                client_secret: process.env.NEXT_LINKEDIN_CLIENT_SECRET,
+                redirect_uri: process.env.NEXT_PUBLIC_LINKEDIN_REDIRECT_URI,
+                client_id: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID,
+                client_secret: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET,
             },
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'

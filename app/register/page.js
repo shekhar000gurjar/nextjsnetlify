@@ -952,7 +952,7 @@ export default function Register() {
                                                 error={!!errors.password}
                                                 endAdornment={
                                                     <IconButton onClick={togglePasswordVisibility} edge="end">
-                                                        {passwordVisibility ? <VisibilityOff /> : <Visibility />}
+                                                        {passwordVisibility ? <Visibility /> : <VisibilityOff />}
                                                     </IconButton>
                                                 }
                                             />
@@ -972,7 +972,7 @@ export default function Register() {
                                                 error={!!errors.confirmPassword}
                                                 endAdornment={
                                                     <IconButton onClick={toggleConfirmPasswordVisibility} edge="end">
-                                                        {confirmPasswordVisibility ? <VisibilityOff /> : <Visibility />}
+                                                        {confirmPasswordVisibility ? <Visibility /> : <VisibilityOff />}
                                                     </IconButton>
                                                 }
                                             />
@@ -983,15 +983,16 @@ export default function Register() {
                                         <LoadingButton loading={loading} fullWidth loadingPosition="center" onClick={handleSubmit} variant="contained" type="submit">
                                             Register
                                         </LoadingButton>
-                                        <Button component={Link} href="login" variant="contained" fullWidth>Login</Button>
+                                        {/* <Button component={Link} href="login" variant="contained" fullWidth>Login</Button> */}
                                     </Stack>
                                 </Box>
-                                <Box my={4}>
-                                    <Divider>
+                                <Typography component={Link} href="login" variant="subtitle2" color='text.primary'>I have already account - Login</Typography>
+                                <Box>
+                                    {/* <Divider>
                                         <Typography variant="caption"> Login with</Typography>
-                                    </Divider>
+                                    </Divider> */}
                                 </Box>
-                                <FirebaseSocial />
+                                {/* <FirebaseSocial /> */}
                             </Paper>
                         </Grid>
                     </Grid>
