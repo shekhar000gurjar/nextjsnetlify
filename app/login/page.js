@@ -130,6 +130,7 @@ import axios from 'axios';
 import { LoadingButton } from "@mui/lab";
 import { allUsers, userDetails } from "@/middleware/userDetails";
 import { postResponse } from "../components/_apihandler";
+import ReferralCommunity from "../home/ReferralCommunity";
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -346,6 +347,9 @@ export default function Login() {
                     </Grid>
                 </Container>
             </Box>
+            <Grid mt={4}>
+                <ReferralCommunity />
+            </Grid>
         </Box>
     );
 }
