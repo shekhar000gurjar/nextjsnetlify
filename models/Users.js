@@ -1,30 +1,39 @@
 import mongoose from 'mongoose';
-import CompaniesDetails from './CompaniesDetails';
 
 const usersSchema = new mongoose.Schema(
     {
         first_name: {
             type: String,
-            required: [true, 'Please provide first name'],
+            required: [false, 'Please provide first name'],
             maxlength: [60, 'First name cannot be more than 60 characters'],
         },
         last_name: {
             type: String,
+            required: [false, 'Please provide last name'],
             maxlength: [60, 'Last name cannot be more than 60 characters'],
         },
         email: {
             type: String,
-            required: [true, 'Please provide email'],
+            required: [false, 'Please provide email'],
             unique: true,
             match: [
                 /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
                 'Please provide a valid email address',
             ],
         },
+        emailVerified: {
+            type: Boolean,
+            default: false
+        },
+        email_otp: {
+            type: String,
+            required: false,
+            default: ""
+        },
         password: {
             type: String,
-            // required: [true, 'Please provide password'],
-            minlength: [6, 'Password must be at least 6 characters long'],
+            required: [false, 'Please provide password'],
+            minlength: [8, 'Password must be at least 8 characters long'],
         },
         phone_number: {
             type: String,
@@ -36,18 +45,61 @@ const usersSchema = new mongoose.Schema(
             },
             default: '',
         },
-        company_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'CompaniesDetails',
-            // required: true
+        currentCompanyName: {
+            type: String,
+            trim: true,
+            lowercase: true,
+            required: [false, 'Please provide current comapany'],
+            default: ''
+        },
+        currentCompanyEmail: {
+            type: String,
+            trim: true,
+            lowercase: true,
+            validate(value) {
+                if (value && !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+                    throw new Error('Invalid company email address');
+                }
+            },
+            default: ''
+        },
+        current_location: {
+            type: String,
+            required: [false, 'Please provide current location']
+        },
+        position: {
+            type: String,
+            trim: true,
+            default: ''
+        },
+        graduationCollege: {
+            type: String,
+            required: [false, 'Please provide graduation college'],
+            default: 'N/A'
+        },
+        postGradCollege: {
+            type: String,
+            required: [false, 'Please provide post graduation college'],
+            default: 'N/A'
+        },
+        degree: {
+            type: String,
+            required: [false, 'Please provide degree']
+        },
+        sector: {
+            type: String,
+            required: [false, 'Please provide sector'],
+            trim: true
         },
         upi_id: {
             type: String,
             default: ''
         },
-        singup_type: {
+        signup_type: {
             type: String,
-            defalut: ''
+            required: [true, 'Please provide signup type'],
+            enum: ['normal', 'google', 'linkedin'],
+            default: 'normal'
         },
         resetPasswordToken: {
             type: String,

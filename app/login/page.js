@@ -347,10 +347,9 @@ export default function Login() {
                     </Grid>
                 </Container>
             </Box>
-            <Grid mt={4}>
+            <Grid mt={6} width={'80%'} textAlign={'center'} ml={'10%'}>
                 <ReferralCommunity />
             </Grid>
         </Box>
     );
 }
-
