@@ -27,6 +27,25 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import validator from 'validator';
 import { userDetails } from "@/middleware/userDetails";
 
+
+// MenuProps for controlling the dropdown menu styling and positioning
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: 48 * 4.5 + 8, // Optional: limit the height of the dropdown
+            zIndex: 1300, // Ensure the dropdown is on top
+        },
+    },
+    anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'left',
+    },
+    transformOrigin: {
+        vertical: 'top',
+        horizontal: 'left',
+    },
+};
+
 export default function Register() {
     const [formData, setFormData] = useState({
         first_name: "",
@@ -60,14 +79,53 @@ export default function Register() {
     const router = useRouter();
 
     // Handle input changes and validation
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+
+    //     // Validate phone number to allow only numeric values
+    //     if (name === "phone_number" && !/^\d*$/.test(value)) {
+    //         setErrors({
+    //             ...errors,
+    //             [name]: "Phone number can only contain numbers"
+    //         });
+    //         return;
+    //     }
+
+    //     setFormData({
+    //         ...formData,
+    //         [name]: value,
+    //     });
+    //     setErrors({
+    //         ...errors,
+    //         [name]: ""
+    //     });
+
+    //     if (name === "confirmPassword") {
+    //         setConfirmPasswordError("");
+    //     }
+    // };
+
+    // // Validate email format
+    // const validateEmail = (email) => {
+    //     return validator.isEmail(email);
+    // };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // Validate phone number to allow only numeric values
-        if (name === "phone_number" && !/^\d*$/.test(value)) {
-            setErrors({
-                ...errors,
-                [name]: "Phone number can only contain numbers"
+        if (name === "company_name" && value === "Others") {
+            setFormData({
+                ...formData,
+                company_name: value,
+                other_company_name: "",
+            });
+            return;
+        }
+        if (name === "graduationCollege" && value === "Others") {
+            setFormData({
+                ...formData,
+                graduationCollege: value,
+                other_graduationCollege: "",
             });
             return;
         }
@@ -86,10 +144,8 @@ export default function Register() {
         }
     };
 
-    // Validate email format
-    const validateEmail = (email) => {
-        return validator.isEmail(email);
-    };
+
+    console.log("formData:-", formData)
 
     // Validate form fields
     const validateForm = () => {
@@ -132,41 +188,6 @@ export default function Register() {
     useEffect(() => {
         getUserDetails();
     }, []);
-
-    // Handle form submission
-    // const handleSubmit = async (e) => {
-    //     setLoading(true);
-    //     if (!validateForm()) {
-    //         setLoading(false);
-    //         return;
-    //     }
-
-    //     const { confirmPassword, other_company_name, other_graduationCollege, other_postGradCollege, ...dataToSend } = formData;
-    //     if (formData.company_name === "Others") {
-    //         dataToSend.company_name = other_company_name;
-    //     }
-    //     if (formData.graduationCollege === "Others") {
-    //         dataToSend.graduationCollege = other_graduationCollege;
-    //     }
-    //     if (formData.postGradCollege === "Others") {
-    //         dataToSend.postGradCollege = other_postGradCollege;
-    //     }
-
-    //     try {
-    //         const response = await postResponse("/api/register", dataToSend);
-    //         if (response.status === 201) {
-    //             localStorage.setItem("token", response.data.token);
-    //             notify(response.data.msg, 'success');
-    //             getUserDetails();
-    //         } else {
-    //             notify(response.data.msg, 'error');
-    //         }
-    //     } catch (error) {
-    //         notify(error.response?.data?.msg || "Something went wrong", 'error');
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
 
     const handleSubmit = async (e) => {
         setLoading(true);
@@ -394,48 +415,47 @@ export default function Register() {
                                                 />
                                                 {errors.email_otp && <FormHelperText error>{errors.email_otp}</FormHelperText>}
                                             </Stack>
-                                            {/* <Stack spacing={1} mt={3}>
-                                                <Button onClick={handleVerifyOtp} disabled={otpVerified || !formData.email_otp}>Verify OTP</Button>
-                                            </Stack> */}
                                         </>
                                     )}
+
                                     <Stack spacing={1} mt={3}>
                                         <InputLabel htmlFor="company_name" sx={{ fontWeight: '600', color: 'primary.main' }}>Company *</InputLabel>
-                                        <Select
-                                            size="small"
-                                            id="company_name"
-                                            name="company_name"
-                                            value={formData.company_name}
-                                            onChange={handleChange}
-                                            fullWidth
-                                            displayEmpty
-                                            error={!!errors.company_name}
-                                        >
-                                            <MenuItem value="" disabled>Select your company</MenuItem>
-                                            <MenuItem value="Google">Google</MenuItem>
-                                            <MenuItem value="Microsoft">Microsoft</MenuItem>
-                                            <MenuItem value="Infosys">Infosys</MenuItem>
-                                            <MenuItem value="Others">Others</MenuItem>
-                                        </Select>
-                                        {errors.company_name && <FormHelperText error>{errors.company_name}</FormHelperText>}
-                                    </Stack>
-                                    {formData.company_name === "Others" && (
-                                        <Stack>
-                                            <InputLabel htmlFor="other_company_name" sx={{ fontWeight: '600', color: 'primary.main' }}>Enter Company Name *</InputLabel>
+                                        {formData.company_name === "Others" ? (
                                             <OutlinedInput
                                                 size="small"
                                                 id="other_company_name"
                                                 type="text"
                                                 name="other_company_name"
                                                 value={formData.other_company_name}
-                                                onChange={(e) => setFormData({ ...formData, other_company_name: e.target.value, company_name: e.target.value })}
+                                                onChange={(e) => setFormData({ ...formData, other_company_name: e.target.value })}
                                                 fullWidth
                                                 placeholder="Enter your company name"
                                                 error={!!errors.other_company_name}
                                             />
-                                            {errors.other_company_name && <FormHelperText error>{errors.other_company_name}</FormHelperText>}
-                                        </Stack>
-                                    )}
+                                        ) : (
+                                            <Select
+                                                size="small"
+                                                id="company_name"
+                                                name="company_name"
+                                                value={formData.company_name}
+                                                onChange={handleChange}
+                                                fullWidth
+                                                displayEmpty
+                                                error={!!errors.company_name}
+                                                MenuProps={MenuProps}
+                                            >
+                                                <MenuItem value="" disabled>Select your company</MenuItem>
+                                                <MenuItem value="Google">Google</MenuItem>
+                                                <MenuItem value="Microsoft">Microsoft</MenuItem>
+                                                <MenuItem value="Infosys">Infosys</MenuItem>
+                                                <MenuItem value="Others">Others</MenuItem>
+                                            </Select>
+                                        )}
+
+                                        {errors.company_name && <FormHelperText error>{errors.company_name}</FormHelperText>}
+                                        {errors.other_company_name && <FormHelperText error>{errors.other_company_name}</FormHelperText>}
+                                    </Stack>
+
                                     <Stack spacing={1} mt={3}>
                                         <InputLabel htmlFor="company_email" sx={{ fontWeight: '600', color: 'primary.main' }}>Company Email &nbsp;
                                             <Typography variant="caption">(optional)</Typography>
@@ -464,6 +484,7 @@ export default function Register() {
                                             fullWidth
                                             displayEmpty
                                             error={!!errors.current_location}
+                                            MenuProps={MenuProps}
                                         >
                                             <MenuItem value="" disabled>Select your current location</MenuItem>
                                             <MenuItem value="India">India</MenuItem>
@@ -471,28 +492,29 @@ export default function Register() {
                                         </Select>
                                         {errors.current_location && <FormHelperText error>{errors.current_location}</FormHelperText>}
                                     </Stack>
+                                    <Stack spacing={1} mt={3}>
+                                        <InputLabel htmlFor="position" sx={{ fontWeight: '600', color: 'primary.main' }}>Position &nbsp;
+                                            <Typography variant="caption">(optional)</Typography>
+                                        </InputLabel>
+                                        <OutlinedInput
+                                            size="small"
+                                            id="position"
+                                            type="text"
+                                            name="position"
+                                            value={formData.position}
+                                            onChange={handleChange}
+                                            fullWidth
+                                            placeholder="Enter your position"
+                                            error={!!errors.position}
+                                        />
+                                        {errors.position && <FormHelperText error>{errors.position}</FormHelperText>}
+                                    </Stack>
                                 </Box>
                             </Paper>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6}>
                             <Paper sx={{ mt: 4, px: 2, py: 4, borderRadius: 3, height: '100%' }}>
-                                <Stack spacing={1} mt={3}>
-                                    <InputLabel htmlFor="position" sx={{ fontWeight: '600', color: 'primary.main' }}>Position &nbsp;
-                                        <Typography variant="caption">(optional)</Typography>
-                                    </InputLabel>
-                                    <OutlinedInput
-                                        size="small"
-                                        id="position"
-                                        type="text"
-                                        name="position"
-                                        value={formData.position}
-                                        onChange={handleChange}
-                                        fullWidth
-                                        placeholder="Enter your position"
-                                        error={!!errors.position}
-                                    />
-                                    {errors.position && <FormHelperText error>{errors.position}</FormHelperText>}
-                                </Stack>
+
                                 <Stack spacing={1} mt={3}>
                                     <InputLabel htmlFor="phone_number" sx={{ fontWeight: '600', display: 'flex', alignItems: 'end', color: 'primary.main' }}>Phone Number &nbsp;
                                         <Typography variant="caption">(optional)</Typography>
@@ -517,78 +539,80 @@ export default function Register() {
                                 </Stack>
                                 <Stack spacing={1} mt={3}>
                                     <InputLabel htmlFor="graduationCollege" sx={{ fontWeight: '600', color: 'primary.main' }}>Graduation College *</InputLabel>
-                                    <Select
-                                        size="small"
-                                        id="graduationCollege"
-                                        name="graduationCollege"
-                                        value={formData.graduationCollege}
-                                        onChange={handleChange}
-                                        fullWidth
-                                        displayEmpty
-                                        error={!!errors.graduationCollege}
-                                    >
-                                        <MenuItem value="N/A" disabled>N/A</MenuItem>
-                                        <MenuItem value="College1">College1</MenuItem>
-                                        <MenuItem value="College2">College2</MenuItem>
-                                        <MenuItem value="College3">College3</MenuItem>
-                                        <MenuItem value="Others">Others</MenuItem>
-                                    </Select>
-                                    {errors.graduationCollege && <FormHelperText error>{errors.graduationCollege}</FormHelperText>}
-                                </Stack>
-                                {formData.graduationCollege === "Others" && (
-                                    <Stack>
-                                        <InputLabel htmlFor="other_graduationCollege" sx={{ fontWeight: '600', color: 'primary.main' }}>Enter Graduation College Name *</InputLabel>
+                                    {formData.graduationCollege === "Others" ? (
                                         <OutlinedInput
                                             size="small"
                                             id="other_graduationCollege"
                                             type="text"
                                             name="other_graduationCollege"
                                             value={formData.other_graduationCollege}
-                                            onChange={(e) => setFormData({ ...formData, other_graduationCollege: e.target.value, graduationCollege: e.target.value })}
+                                            onChange={(e) => setFormData({ ...formData, other_graduationCollege: e.target.value })}
                                             fullWidth
                                             placeholder="Enter your graduation college"
                                             error={!!errors.other_graduationCollege}
                                         />
-                                        {errors.other_graduationCollege && <FormHelperText error>{errors.other_graduationCollege}</FormHelperText>}
-                                    </Stack>
-                                )}
+                                    ) : (
+                                        <Select
+                                            size="small"
+                                            id="graduationCollege"
+                                            name="graduationCollege"
+                                            value={formData.graduationCollege}
+                                            onChange={handleChange}
+                                            fullWidth
+                                            displayEmpty
+                                            error={!!errors.graduationCollege}
+                                            MenuProps={MenuProps}
+                                        >
+                                            <MenuItem value="N/A" disabled>N/A</MenuItem>
+                                            <MenuItem value="College1">College1</MenuItem>
+                                            <MenuItem value="College2">College2</MenuItem>
+                                            <MenuItem value="College3">College3</MenuItem>
+                                            <MenuItem value="Others">Others</MenuItem>
+                                        </Select>
+                                    )}
+
+                                    {errors.graduationCollege && <FormHelperText error>{errors.graduationCollege}</FormHelperText>}
+                                    {errors.other_graduationCollege && <FormHelperText error>{errors.other_graduationCollege}</FormHelperText>}
+                                </Stack>
+
                                 <Stack spacing={1} mt={3}>
                                     <InputLabel htmlFor="postGradCollege" sx={{ fontWeight: '600', color: 'primary.main' }}>Post Grad College *</InputLabel>
-                                    <Select
-                                        size="small"
-                                        id="postGradCollege"
-                                        name="postGradCollege"
-                                        value={formData.postGradCollege}
-                                        onChange={handleChange}
-                                        fullWidth
-                                        displayEmpty
-                                        error={!!errors.postGradCollege}
-                                    >
-                                        <MenuItem value="N/A" disabled>N/A</MenuItem>
-                                        <MenuItem value="College1">College1</MenuItem>
-                                        <MenuItem value="College2">College2</MenuItem>
-                                        <MenuItem value="College3">College3</MenuItem>
-                                        <MenuItem value="Others">Others</MenuItem>
-                                    </Select>
-                                    {errors.postGradCollege && <FormHelperText error>{errors.postGradCollege}</FormHelperText>}
-                                </Stack>
-                                {formData.postGradCollege === "Others" && (
-                                    <Stack>
-                                        <InputLabel htmlFor="other_postGradCollege" sx={{ fontWeight: '600', color: 'primary.main' }}>Enter Post Grad College Name *</InputLabel>
+                                    {formData.postGradCollege === "Others" ? (
                                         <OutlinedInput
                                             size="small"
                                             id="other_postGradCollege"
                                             type="text"
                                             name="other_postGradCollege"
                                             value={formData.other_postGradCollege}
-                                            onChange={(e) => setFormData({ ...formData, other_postGradCollege: e.target.value, postGradCollege: e.target.value })}
+                                            onChange={(e) => setFormData({ ...formData, other_postGradCollege: e.target.value })}
                                             fullWidth
                                             placeholder="Enter your post grad college"
                                             error={!!errors.other_postGradCollege}
                                         />
-                                        {errors.other_postGradCollege && <FormHelperText error>{errors.other_postGradCollege}</FormHelperText>}
-                                    </Stack>
-                                )}
+                                    ) : (
+                                        <Select
+                                            size="small"
+                                            id="postGradCollege"
+                                            name="postGradCollege"
+                                            value={formData.postGradCollege}
+                                            onChange={handleChange}
+                                            fullWidth
+                                            displayEmpty
+                                            error={!!errors.postGradCollege}
+                                            MenuProps={MenuProps}
+                                        >
+                                            <MenuItem value="N/A" disabled>N/A</MenuItem>
+                                            <MenuItem value="College1">College1</MenuItem>
+                                            <MenuItem value="College2">College2</MenuItem>
+                                            <MenuItem value="College3">College3</MenuItem>
+                                            <MenuItem value="Others">Others</MenuItem>
+                                        </Select>
+                                    )}
+
+                                    {errors.postGradCollege && <FormHelperText error>{errors.postGradCollege}</FormHelperText>}
+                                    {errors.other_postGradCollege && <FormHelperText error>{errors.other_postGradCollege}</FormHelperText>}
+                                </Stack>
+
                                 <Stack spacing={1} mt={3}>
                                     <InputLabel htmlFor="degree" sx={{ fontWeight: '600', color: 'primary.main' }}>Degree *</InputLabel>
                                     <Select
@@ -600,6 +624,7 @@ export default function Register() {
                                         fullWidth
                                         displayEmpty
                                         error={!!errors.degree}
+                                        MenuProps={MenuProps}
                                     >
                                         <MenuItem value="" disabled>Select your degree</MenuItem>
                                         {degreeOptions.map((degree, index) => (
@@ -619,6 +644,7 @@ export default function Register() {
                                         fullWidth
                                         displayEmpty
                                         error={!!errors.sector}
+                                        MenuProps={MenuProps}
                                     >
                                         <MenuItem value="" disabled>Select your sector</MenuItem>
                                         <MenuItem value="IT & Technology">IT & Technology</MenuItem>
@@ -670,11 +696,6 @@ export default function Register() {
                                             fullWidth
                                             placeholder="Confirm your password"
                                             error={!!errors.confirmPassword}
-                                        // endAdornment={
-                                        //     <IconButton onClick={toggleConfirmPasswordVisibility} edge="end">
-                                        //         {confirmPasswordVisibility ? <Visibility /> : <VisibilityOff />}
-                                        //     </IconButton>
-                                        // }
                                         />
                                         {errors.confirmPassword && <FormHelperText error>{errors.confirmPassword}</FormHelperText>}
                                     </Stack>
