@@ -181,7 +181,7 @@ export default function Login() {
             const response = await userDetails();
             if (response.status === 200) {
                 localStorage.setItem('user', JSON.stringify(response.data.data));
-                router.push('/home');
+                router.push('/search-company');
             }
         }
     };

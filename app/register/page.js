@@ -105,10 +105,10 @@ export default function Register() {
     //     }
     // };
 
-    // // Validate email format
-    // const validateEmail = (email) => {
-    //     return validator.isEmail(email);
-    // };
+    // Validate email format
+    const validateEmail = (email) => {
+        return validator.isEmail(email);
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -180,7 +180,7 @@ export default function Register() {
             const response = await userDetails();
             if (response.status === 200) {
                 localStorage.setItem('user', JSON.stringify(response.data.data));
-                router.push('/home');
+                router.push('/search-company');
             }
         }
     };

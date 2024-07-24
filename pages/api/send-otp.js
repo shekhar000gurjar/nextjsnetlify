@@ -32,7 +32,7 @@ export default async function handler(req, res) {
             });
 
             let mailOptions = {
-                from: `"Your Name" <${process.env.NEXT_GMAIL_USER}>`, // Sender address
+                from: `"ReferMyJob Otp" <${process.env.NEXT_GMAIL_USER}>`, // Sender address
                 to: email,
                 subject: 'Your OTP Code',
                 text: `Your OTP code is ${otp}`,
