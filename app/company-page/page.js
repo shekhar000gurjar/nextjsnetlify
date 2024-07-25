@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import { Box, Typography, FormControl, RadioGroup, FormControlLabel, Radio, Button } from '@mui/material';
+import React, { Suspense, useEffect, useState } from 'react';
+import { Box, Typography, FormControl, RadioGroup, FormControlLabel, Radio, Button, CircularProgress } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useSearchParams, useRouter } from 'next/navigation'; // Import useRouter
 import { postResponse } from '../components/_apihandler';
 
-function UserSelectionPage() {
+function CompanyPageComponent() {
     const searchParams = useSearchParams();
     const router = useRouter(); // Initialize useRouter
     const [companyName, setCompanyName] = useState('');
@@ -112,9 +112,14 @@ function UserSelectionPage() {
             </Box>
         </Box>
     );
+};
+
+
+
+export default function CompanyPage() {
+    return (
+        <Suspense fallback={<CircularProgress />}>
+            <CompanyPageComponent />
+        </Suspense>
+    );
 }
-
-export default UserSelectionPage;
-
-
-

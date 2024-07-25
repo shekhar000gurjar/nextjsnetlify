@@ -7,7 +7,7 @@ import PageLoader from '../components/PageLoader';
 import { LoadingButton } from '@mui/lab';
 import { putRequest } from '../components/_apihandler';
 
-export default function userProfile() {
+export default function UserProfile() {
     const [loading, setLoading] = useState(false)
     const [pageLoading, setPageLoading] = useState(false);
     const [user, setUser] = useState({});

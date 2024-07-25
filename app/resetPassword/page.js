@@ -59,11 +59,12 @@
 // app/reset-password/page.js
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { postResponse } from '../components/_apihandler';
+import { CircularProgress } from '@mui/material';
 
-const ResetPassword = () => {
+function ResetPasswordComponent() {
     const searchParams = useSearchParams();
     const token = searchParams.get('token'); // Get the token from the query parameters
     const [password, setPassword] = useState('');
@@ -87,10 +88,10 @@ const ResetPassword = () => {
         const response = await postResponse('/api/reset-password', { token, password });
 
         console.log(response, "res")
-        if(response.status === 200){
+        if (response.status === 200) {
 
             setMessage(response.data.message);
-            
+
         }
         // const data = await response.json();
     };
@@ -120,4 +121,12 @@ const ResetPassword = () => {
     );
 };
 
-export default ResetPassword;
+
+
+export default function ResetPassword() {
+    return (
+        <Suspense fallback={<CircularProgress />}>
+            <ResetPasswordComponent />
+        </Suspense>
+    );
+}
