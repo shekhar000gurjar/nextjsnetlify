@@ -136,7 +136,7 @@ export default function Login() {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
-        singup_type: "normal"
+        signup_type: "normal"
     });
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
