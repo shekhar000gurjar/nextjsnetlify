@@ -49,12 +49,12 @@ export default async function handler(req, res) {
           emailVerified: true
         });
 
-        const token = generateToken(userToReturn._id, userToReturn.email);
-        res.status(200).json({ success: true, msg: "Login successfully", token, data: userToReturn });
+        const token = await generateToken(userToReturn._id, userToReturn.email);
+        res.status(200).json({ success: true, msg: "Login successfuly", token, data: userToReturn });
 
       } else {
         const user = await authenticateUser(email, password);
-        const token = generateToken(user._id, user.email);
+        const token = await generateToken(user._id, user.email);
         res.status(200).json({ success: true, msg: "Login successfully", token, data: user });
       }
     } catch (error) {
