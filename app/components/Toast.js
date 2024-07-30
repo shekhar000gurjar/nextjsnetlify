@@ -1,11 +1,35 @@
-// components/Toast.js
+// // components/Toast.js
+// "use client";
+
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
+// const Toast = () => {
+//     return <ToastContainer />;
+// };
+
+// export const notify = (message, type = 'info') => {
+//     switch (type) {
+//         case 'success':
+//             toast.success(message);
+//             break;
+//         case 'error':
+//             toast.error(message);
+//             break;
+//         default:
+//             toast.info(message);
+//     }
+// };
+
+// export default Toast;
+
 "use client";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Toast = () => {
-    return <ToastContainer />;
+    return <ToastContainer autoClose={2000} />;
 };
 
 export const notify = (message, type = 'info') => {
@@ -22,3 +46,4 @@ export const notify = (message, type = 'info') => {
 };
 
 export default Toast;
+

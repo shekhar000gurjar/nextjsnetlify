@@ -83,7 +83,7 @@ export default async function handler(req, res) {
                 text: message
             });
 
-            res.status(200).json({ message: 'Email sent.' });
+            res.status(200).json({ message: 'Email Sent Successfully.' });
         } catch (error) {
             console.log(error, "error")
             user.resetPasswordToken = undefined;
