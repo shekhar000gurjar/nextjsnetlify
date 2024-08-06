@@ -1,107 +1,3 @@
-// import { Box, Button, Checkbox, Container, Divider, FormControlLabel, Grid, InputBase, InputLabel, OutlinedInput, Paper, Stack, TextField, Typography } from "@mui/material";
-// import FirebaseSocial from "../components/FirebaseSocial";
-// import Link from "next/link";
-
-
-// export default function login() {
-//     return (
-//         <Box className='reBg' pb={10}>
-//             <Box py={4} sx={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}>
-//                 <Typography textAlign='center' variant="h3" color='text.white'>ReferMyJob</Typography>
-//                 <Typography textAlign='center' variant="h5" color='text.white'>Helping people apply for jobs through referrals</Typography>
-//             </Box>
-//             <Box mt={2}>
-//                 <Container>
-//                     <Grid container justifyContent="center" spacing={5} sx={{ px: 6 }}>
-//                         <Grid item xs={12} sm={6}  >
-//                             <Paper sx={{ mt: 4, px: 2, py: 4, borderRadius: 3, height: '100%' }}>
-//                                 <Typography variant="h5" fontWeight='bold' sx={{ pb: 1.5 }}> Login to start sending job referrals</Typography>
-//                                 <Divider sx={{ borderBottom: "solid", borderColor: 'primary.main', mb: 4 }} />
-
-//                                 <Box
-//                                     component="form"
-//                                 >
-
-//                                     <Stack spacing={1} >
-//                                         <InputLabel htmlFor="email-login" sx={{ fontWeight: '600', color: 'primart.main' }}>Email Address / Username</InputLabel>
-//                                         <OutlinedInput
-//                                             size="small"
-//                                             id="email-login"
-//                                             type="email"
-//                                             name="email"
-//                                             fullWidth
-//                                         />
-//                                     </Stack>
-//                                     <Stack spacing={1} mt={3}>
-//                                         <InputLabel htmlFor="password" sx={{ fontWeight: '600', color: 'primart.main' }}>Password</InputLabel>
-//                                         <OutlinedInput
-//                                             size="small"
-//                                             id="password"
-//                                             type="pass"
-//                                             name="fullname"
-//                                             fullWidth
-//                                         />
-//                                     </Stack>
-//                                     <Stack direction="row" my={2} justifyContent="space-between" alignItems="center" spacing={2}>
-//                                         <FormControlLabel
-//                                             control={
-//                                                 <Checkbox 
-//                                                     name="checked"
-//                                                     color="primary"
-//                                                     size="small"
-//                                                 />
-//                                             }
-//                                             label={<Typography variant="subtitle2" color='text.secondary'>Keep me sign in</Typography>}
-//                                         />
-
-//                                         <Typography component={Link} href="register" variant="subtitle2" color='text.secondary'>Forgot Password?</Typography>
-//                                     </Stack>
-//                                     <Stack direction="row" spacing={2} mt={3}> 
-//                                         <Button variant="contained" fullWidth>Login</Button>
-//                                         <Button component={Link} href="register" variant="contained" fullWidth>Register</Button>
-
-//                                     </Stack>
-//                                 </Box>
-//                                 <Box my={4}>
-//                                     <Divider>
-//                                         <Typography variant="caption"> Login with</Typography>
-//                                     </Divider></Box>
-//                                 <FirebaseSocial />
-//                             </Paper>
-//                         </Grid>
-//                         <Grid item xs={12} sm={6} >
-//                             <Paper sx={{ mt: 4, px: 2, py: 4, borderRadius: 3, height: '100%' }}>
-//                                 <Typography variant="h5" fontWeight='bold' sx={{ pb: 1.5 }}>Search for refer buddies</Typography>
-//                                 <Divider sx={{ borderBottom: "solid", borderColor: 'primary.main', mb: 4 }} />
-//                                 <Stack spacing={1} mb={4}>
-//                                     <Paper
-//                                         component="form"
-//                                         sx={{ p: '1px 4px', display: 'flex', alignItems: 'center', }}
-//                                     >
-//                                         <InputBase
-//                                             sx={{ ml: 1, flex: 1 }}
-//                                             placeholder="Search by company"
-//                                             inputProps={{ 'aria-label': 'Search by company' }}
-//                                         />
-//                                         <Button variant="contained" >Search</Button>
-//                                     </Paper>
-//                                 </Stack>
-//                                 <ul className="company-list" id="company-list">
-//                                     <li>John Doe - Google</li>
-//                                     <li>Jane Smith - Microsoft</li>
-//                                     <li>Michael Johnson - Amazon</li>
-//                                     <li>Emily Davis - Apple</li>
-//                                 </ul>
-
-//                             </Paper>
-//                         </Grid>
-//                     </Grid>
-//                 </Container>
-//             </Box>
-//         </Box>
-//     )
-// }
-
 "use client"
 import {
     Box,
@@ -136,7 +32,7 @@ export default function Login() {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
-        singup_type: "normal"
+        signup_type: "normal"
     });
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
@@ -307,7 +203,7 @@ export default function Login() {
 
                                         <Typography component={Link} href="forgotPassword" variant="subtitle2" color='text.secondary'>Forgot Password?</Typography>
                                     </Stack>
-                                    <Typography component={Link} href="register" variant="subtitle2" color='text.primary'>New User? register here</Typography>
+                                    <Typography component={Link} href="register" variant="subtitle2" color='text.primary'>New User? Register Here</Typography>
                                     <Stack direction="row" spacing={2} mt={3}>
                                         <LoadingButton loading={loading} variant="contained" fullWidth type="submit">Login</LoadingButton>
                                     </Stack>
