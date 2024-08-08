@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Users from './Users';
 
 const referPointsDetailsSchema = new mongoose.Schema(
     {

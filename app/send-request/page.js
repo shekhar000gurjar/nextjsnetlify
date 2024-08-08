@@ -665,17 +665,32 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { postResponse } from '../components/_apihandler';
 import { notify } from '../components/Toast';
 import MainLayout from '../layouts/MainLayout';
+import { userDetails } from '@/middleware/userDetails';
 
 function SendRequestComponent() {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const [userDetails, setUserDetails] = useState({});
+    const [userDetail, setUserDetails] = useState({});
     const [currentUser, setCurrentUser] = useState({});
     const [vacancyName, setVacancyName] = useState("");
     const [jobId, setJobId] = useState("");
     const [jobLink, setJobLink] = useState("");
     const [loading, setLoading] = useState(false);
     const [fetching, setFetching] = useState(false);
+
+
+    useEffect(() => {
+        getUserDetails();
+    }, []);
+
+    const getUserDetails = async () => {
+        if (localStorage.getItem('token')) {
+            const response = await userDetails();
+            if (response.status === 200) {
+                localStorage.setItem("user", JSON.stringify(response.data.data));
+            }
+        }
+    };
 
     useEffect(() => {
         const _id = searchParams.get("userId");
@@ -687,6 +702,7 @@ function SendRequestComponent() {
             setCurrentUser(JSON.parse(user));
         }
     }, [searchParams]);
+
 
     const fetchUserDetail = async (_id) => {
         setFetching(true);
@@ -707,7 +723,7 @@ function SendRequestComponent() {
 
     const handleSubmit = async () => {
 
-        if (userDetails && (userDetails.total_refer_points <= 0)) {
+        if (currentUser && (currentUser.total_refer_points <= 0)) {
             notify("You Have No Sufficient Points Please Recharge!", 'error');
             return;
         }
@@ -720,9 +736,12 @@ function SendRequestComponent() {
         setLoading(true);
         try {
             const dataToSend = {
-                email: userDetails.email,
+                user_id: currentUser._id,
+                sender_id: userDetail._id,
+                sender_email: currentUser.email,
+                email: userDetail.email,
                 vacancy_name: vacancyName,
-                receiver_first_name: userDetails.first_name,
+                receiver_first_name: userDetail.first_name,
                 first_name: currentUser.first_name,
                 last_name: currentUser.last_name,
                 job_id: jobId,
@@ -764,7 +783,7 @@ function SendRequestComponent() {
                             }}
                         >
                             <Typography variant="h5">
-                                Send request to {`${userDetails.first_name} ${userDetails.last_name}` || ""} for {userDetails.currentCompanyName || ""}
+                                Send request to {`${userDetail.first_name} ${userDetail.last_name}` || ""} for {userDetail.currentCompanyName || ""}
                             </Typography>
                         </Paper>
                         <Paper

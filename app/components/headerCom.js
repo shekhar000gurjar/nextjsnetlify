@@ -326,6 +326,16 @@ export default function HeaderCom({ user }) {
         router.push('/userprofile'); // Navigate to the user profile page
     };
 
+    const handleSendRequestClick = () => {
+        handleClose();
+        router.push('/requests-sent'); // Navigate to the user profile page
+    };
+
+    const handleReceivedRequestClick = () => {
+        handleClose();
+        router.push('/requests-received'); // Navigate to the user profile page
+    };
+
     const handleSummaryClick = () => {
         handleClose();
         router.push('/summary'); // Navigate to the user profile page
@@ -405,6 +415,8 @@ export default function HeaderCom({ user }) {
                                                     onKeyDown={handleListKeyDown}
                                                 >
                                                     <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
+                                                    <MenuItem onClick={handleSendRequestClick}>Send Requests</MenuItem>
+                                                    <MenuItem onClick={handleReceivedRequestClick}>Received Requests</MenuItem>
                                                     <MenuItem onClick={handleSummaryClick}>Account Summary</MenuItem>
                                                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                                 </MenuList>

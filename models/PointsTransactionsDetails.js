@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import Users from './Users';
+import ReferPointsDetails from './ReferPointsDetails';
 
 const pointsTransactionsDetailsSchema = new mongoose.Schema(
     {
