@@ -141,8 +141,8 @@
 // export default SubmitVerificationPage;
 
 "use client"
-import React, { useEffect, useState } from 'react';
-import { Box, Typography, Button, TextField, IconButton, List, ListItem, ListItemText, Avatar } from '@mui/material';
+import React, { Suspense, useEffect, useState } from 'react';
+import { Box, Typography, Button, TextField, IconButton, List, ListItem, ListItemText, Avatar, CircularProgress } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CloseIcon from '@mui/icons-material/Close';
 import { notify } from '../components/Toast';
@@ -151,7 +151,7 @@ import MainLayout from '../layouts/MainLayout';
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from '../components/Loading';
 
-const SubmitVerificationPage = () => {
+const SubmitVerification = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [files, setFiles] = useState([]);
@@ -308,4 +308,15 @@ const SubmitVerificationPage = () => {
     );
 };
 
-export default SubmitVerificationPage;
+// export default SubmitVerificationPage;
+
+
+
+export default function SubmitVerificationPage() {
+    return (
+        <Suspense fallback={<CircularProgress />}>
+            <SubmitVerification />
+        </Suspense>
+    );
+}
+

@@ -137,8 +137,11 @@ const ReferralCommunity = () => {
                 }}
             >
                 <ul style={{ paddingLeft: '20px', listStyleType: 'disc' }}>
-                    <Typography component="li" sx={{ margin: '10px 0' }} variant="h6">
+                    {/* <Typography component="li" sx={{ margin: '10px 0' }} variant="h6">
                         Go to the desired company's career website and search for relevant job.
+                    </Typography> */}
+                    <Typography component="li" sx={{ margin: '10px 0' }} variant="h6">
+                        Go to the desired company&apos;s career website and search for relevant job.
                     </Typography>
                     <Typography component="li" sx={{ margin: '10px 0' }} variant="h6">
                         Shortlist the vacancy & note down the job id and application link.
