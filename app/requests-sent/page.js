@@ -140,6 +140,7 @@ const ReferralSentPage = () => {
             const response = await userDetails();
             if (response.status === 200) {
                 localStorage.setItem('user', JSON.stringify(response.data.data));
+                setUserData(response.data.data);
             }
         }
     };
@@ -150,8 +151,6 @@ const ReferralSentPage = () => {
         if (!token || !user) {
             notify("Please Logged In First!", "error");
             router.push('/login');
-        } else {
-            setUserData(user);
         }
     }, [router]);
 
@@ -190,7 +189,7 @@ const ReferralSentPage = () => {
                 return 'Successful';
             case 'Expired':
                 return 'Expired';
-            case 'Cancled':
+            case 'Canceled':
                 return 'Canceled';
             default:
                 return '';
@@ -203,6 +202,7 @@ const ReferralSentPage = () => {
             if (response.status === 200) {
                 notify(response.data.msg);
                 fetchSendRequest()
+                getUserDetails()
             } else {
                 notify("Something Went Wrong!", "error");
             }

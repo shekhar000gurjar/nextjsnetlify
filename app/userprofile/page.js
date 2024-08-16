@@ -187,6 +187,11 @@ export default function UserProfile() {
         return <CircularProgress />;
     }
 
+
+    const capitalizeFirstLetter = (string) => {
+        return string.replace(/\b\w/g, (char) => char.toUpperCase());
+    };
+
     return (
         <MainLayout>
             <Box pt={2} display='flex' alignItems='center'>
@@ -195,7 +200,7 @@ export default function UserProfile() {
                         <Stack>
                             <Typography variant='h5' color='text.hint' fontWeight='600'>User Profile</Typography>
 
-                            <Stack direction='row' mt={2}>
+                            {/* <Stack direction='row' mt={2}>
                                 <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Name:</Typography>
                                 <Typography variant='body2' color='text.secondary' fontSize='14px'>{`${user.first_name} ${user.last_name}`}</Typography>
                             </Stack>
@@ -203,6 +208,37 @@ export default function UserProfile() {
                             <Stack direction='row'>
                                 <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Company:</Typography>
                                 <Typography variant='body2' color='text.secondary' fontSize='14px'>{user.currentCompanyName}</Typography>
+                            </Stack> */}
+                            <Stack direction='row' mt={2}>
+                                <Typography
+                                    variant="body2"
+                                    fontWeight='600'
+                                    color='text.hint'
+                                    gutterBottom='false'
+                                    fontSize='14px'
+                                    sx={{ width: '32%' }}
+                                >
+                                    Name:
+                                </Typography>
+                                <Typography variant='body2' color='text.secondary' fontSize='14px'>
+                                    {capitalizeFirstLetter(`${user.first_name} ${user.last_name}`)}
+                                </Typography>
+                            </Stack>
+
+                            <Stack direction='row'>
+                                <Typography
+                                    variant="body2"
+                                    fontWeight='600'
+                                    color='text.hint'
+                                    gutterBottom='false'
+                                    fontSize='14px'
+                                    sx={{ width: '32%' }}
+                                >
+                                    Company:
+                                </Typography>
+                                <Typography variant='body2' color='text.secondary' fontSize='14px'>
+                                    {capitalizeFirstLetter(user.currentCompanyName)}
+                                </Typography>
                             </Stack>
                             <Stack direction='row'>
                                 <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>UPI ID:</Typography>
@@ -210,15 +246,15 @@ export default function UserProfile() {
                             </Stack>
                             <Stack direction='row'>
                                 <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Referral Requests Pending:</Typography>
-                                <Typography variant='body2' color='text.secondary' fontSize='14px'>$200</Typography>
+                                <Typography variant='body2' color='text.secondary' fontSize='14px'>$</Typography>
                             </Stack>
                             <Stack direction='row'>
                                 <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Rewards Pending:</Typography>
-                                <Typography variant='body2' color='text.secondary' fontSize='14px'>3</Typography>
+                                <Typography variant='body2' color='text.secondary' fontSize='14px'></Typography>
                             </Stack>
                             <Stack direction='row'>
                                 <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Rewards Earned:</Typography>
-                                <Typography variant='body2' color='text.secondary' fontSize='14px'>$500</Typography>
+                                <Typography variant='body2' color='text.secondary' fontSize='14px'>$</Typography>
                             </Stack>
                         </Stack>
 

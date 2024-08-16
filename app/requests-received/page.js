@@ -162,6 +162,7 @@ const ReferralReceivedPage = () => {
             if (response.status === 200) {
                 notify(response.data.msg);
                 fetchReceivedRequests()
+                getUserDetails()
             } else {
                 notify("Something Went Wrong!", "error");
             }

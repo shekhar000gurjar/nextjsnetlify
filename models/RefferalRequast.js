@@ -55,7 +55,7 @@ const refferalRequastSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            enum: ['Accepted', 'Rejected', 'Successful', 'Expired', 'Waiting', 'Cancled', 'Send'],
+            enum: ['Accepted', 'Rejected', 'Successful', 'Expired', 'Waiting', 'Canceled', 'Send'],
         },
         verification: {
             type: Boolean,
