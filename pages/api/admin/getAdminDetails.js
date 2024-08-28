@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import dbConnect from '@/lib/mongodb';
 import { adminAuthMiddleware } from '@/middleware/adminAuthMiddleware';
 
