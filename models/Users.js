@@ -101,6 +101,10 @@ const usersSchema = new mongoose.Schema(
             enum: ['normal', 'google', 'linkedin'],
             default: 'normal'
         },
+        total_refer_points: {
+            type: Number,
+            default: 0
+        },
         resetPasswordToken: {
             type: String,
             required: false

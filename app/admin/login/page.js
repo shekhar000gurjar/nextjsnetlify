@@ -17,35 +17,31 @@ import {
     FormHelperText,
     IconButton
 } from "@mui/material";
-import FirebaseSocial from "../components/FirebaseSocial";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { notify } from "../components/Toast";
-import axios from 'axios';
+import { notify } from "../../components/Toast";
 import { LoadingButton } from "@mui/lab";
-import { allUsers, userDetails } from "@/middleware/userDetails";
-import { postResponse } from "../components/_apihandler";
-import ReferralCommunity from "../home/ReferralCommunity";
+import { postResponse } from "../../components/_apihandler";
+import { getAdminDetails } from "@/middleware/userDetails";
 
 export default function Login() {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
-        signup_type: "normal"
+        type: "admin"
     });
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const [passwordVisibility, setPasswordVisibility] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
-    const [usersDetails, setUsersDetails] = useState([])
 
     const router = useRouter();
 
     useEffect(() => {
-        const storedEmail = localStorage.getItem('rememberMeEmail');
-        const storedPassword = localStorage.getItem('rememberMePassword');
+        const storedEmail = localStorage.getItem('rememberMeAdminEmail');
+        const storedPassword = localStorage.getItem('rememberMeAdminPassword');
         if (storedEmail && storedPassword) {
             setFormData({ email: storedEmail, password: storedPassword });
             setRememberMe(true);
@@ -73,30 +69,18 @@ export default function Login() {
     };
 
     // Fetch user details if token is present
-    const getUserDetails = async () => {
-        if (localStorage.getItem('token')) {
-            const response = await userDetails();
+    const adminDetails = async () => {
+        if (localStorage.getItem('adminToken')) {
+            const response = await getAdminDetails();
             if (response.status === 200) {
-                localStorage.setItem('user', JSON.stringify(response.data.data));
-                router.push('/search-company');
+                localStorage.setItem('admin', JSON.stringify(response.data.data));
+                router.push('/admin/home');
             }
         }
     };
 
-    const usersList = async () => {
-        try {
-
-            const response = await allUsers();
-            console.log(response, "response");
-
-        } catch (error) {
-            setUsersDetails([])
-        }
-    }
-
     useEffect(() => {
-        getUserDetails();
-        // usersList();
+        adminDetails();
     }, []);
 
     const handleSubmit = async (e) => {
@@ -106,18 +90,18 @@ export default function Login() {
         setLoading(true);
 
         try {
-            const response = await postResponse("/api/login", formData);
+            const response = await postResponse("/api/admin/login", formData);
             if (response.status === 200) {
                 notify(response.data.msg, 'success');
                 if (rememberMe) {
-                    localStorage.setItem('rememberMeEmail', formData.email);
-                    localStorage.setItem('rememberMePassword', formData.password);
+                    localStorage.setItem('rememberMeAdminEmail', formData.email);
+                    localStorage.setItem('rememberMeAdminPassword', formData.password);
                 } else {
-                    localStorage.removeItem('rememberMeEmail');
-                    localStorage.removeItem('rememberMePassword');
+                    localStorage.removeItem('rememberMeAdminEmail');
+                    localStorage.removeItem('rememberMeAdminPassword');
                 }
-                localStorage.setItem('token', response.data.token);
-                getUserDetails();
+                localStorage.setItem('adminToken', response.data.token);
+                adminDetails();
             } else {
                 notify(response.data.msg, 'error');
             }
@@ -149,7 +133,7 @@ export default function Login() {
                     <Grid container justifyContent="center" spacing={5} sx={{ px: 6 }}>
                         <Grid item xs={12} sm={6}  >
                             <Paper sx={{ mt: 4, px: 2, py: 4, borderRadius: 3, height: '100%' }}>
-                                <Typography variant="h5" fontWeight='bold' sx={{ pb: 1.5 }}> Login to start sending job referrals</Typography>
+                                {/* <Typography variant="h5" fontWeight='bold' sx={{ pb: 1.5 }}> Login to start sending job referrals</Typography> */}
                                 <Divider sx={{ borderBottom: "solid", borderColor: 'primary.main', mb: 4 }} />
 
                                 <Box component="form" onSubmit={handleSubmit}>
@@ -202,21 +186,21 @@ export default function Login() {
                                             label={<Typography variant="subtitle2" color='text.secondary'>Keep me signed in</Typography>}
                                         />
 
-                                        <Typography component={Link} href="forgotPassword" variant="subtitle2" color='text.secondary'>Forgot Password?</Typography>
+                                        {/* <Typography component={Link} href="forgotPassword" variant="subtitle2" color='text.secondary'>Forgot Password?</Typography> */}
                                     </Stack>
-                                    <Typography component={Link} href="register" variant="subtitle2" color='text.primary'>New User? Register Here</Typography>
+                                    {/* <Typography component={Link} href="register" variant="subtitle2" color='text.primary'>New User? Register Here</Typography> */}
                                     <Stack direction="row" spacing={2} mt={3}>
                                         <LoadingButton loading={loading} variant="contained" fullWidth type="submit">Login</LoadingButton>
                                     </Stack>
                                 </Box>
-                                <Box my={4}>
+                                {/* <Box my={4}>
                                     <Divider>
                                         <Typography variant="caption"> Login with</Typography>
                                     </Divider></Box>
-                                <FirebaseSocial />
+                                <FirebaseSocial /> */}
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} sm={6} >
+                        {/* <Grid item xs={12} sm={6} >
                             <Paper sx={{ mt: 4, px: 2, py: 4, borderRadius: 3, height: '100%' }}>
                                 <Typography variant="h5" fontWeight='bold' sx={{ pb: 1.5 }}>Search for refer buddies</Typography>
                                 <Divider sx={{ borderBottom: "solid", borderColor: 'primary.main', mb: 4 }} />
@@ -240,13 +224,10 @@ export default function Login() {
                                     <li>Apple</li>
                                 </ul>
                             </Paper>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </Container>
             </Box>
-            <Grid mt={6} width={'80%'} textAlign={'center'} ml={'10%'}>
-                <ReferralCommunity />
-            </Grid>
         </Box>
     );
 }

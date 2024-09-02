@@ -17,10 +17,30 @@ export const userDetails = async () => {
     }
 };
 
+export const getAdminDetails = async () => {
+    try {
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const response = await axios.get('/api/admin/getAdminDetails', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response;
+    } catch (error) {
+        console.error(error);
+        return { success: false, msg: error.message };
+    }
+};
+
 export const allUsers = async () => {
     try {
         const response = await getResponse('/api/allUsers');
-        console.log(response,"response");
+        console.log(response, "response");
         return response;
     } catch (error) {
         return error;

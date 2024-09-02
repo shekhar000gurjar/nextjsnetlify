@@ -275,10 +275,13 @@ import HomeIcon from '@mui/icons-material/Home';
 import { getResponse } from '../components/_apihandler';
 import { useRouter } from "next/navigation";
 import MainLayout from '../layouts/MainLayout';
+import ReferPointsPopup from '../register/ReferPointsPopup';
 
 const SearchPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [companies, setCompanies] = useState([]);
+    const [showPopup, setShowPopup] = useState(false);
+    const [referPoints, setReferPoints] = useState(0);
     const router = useRouter();
 
     const filteredCompanies = companies.filter(company =>
@@ -287,6 +290,18 @@ const SearchPage = () => {
 
     useEffect(() => {
         allCompanies();
+    }, []);
+
+    useEffect(() => {
+        const showPopupFlag = JSON.parse(localStorage.getItem("showPopup"));
+        const showReferFlag = JSON.parse(localStorage.getItem("referPoints"));
+        if (showPopupFlag === true) {
+            setShowPopup(showPopupFlag);
+            setReferPoints(showReferFlag);
+            localStorage.removeItem("showPopup"); // Clear the flag after showing the popup
+            localStorage.removeItem("referPoints"); // Clear the flag after showing the popup
+
+        }
     }, []);
 
     const allCompanies = async () => {
@@ -392,6 +407,11 @@ const SearchPage = () => {
                     </Container>
                 </Box>
             </Box>
+            <ReferPointsPopup
+                open={showPopup}
+                onClose={() => setShowPopup(false)}
+                points={referPoints}
+            />
         </MainLayout>
     );
 };

@@ -78,6 +78,7 @@ export default async function handler(req, res) {
 
         try {
             await sendEmail({
+                from: process.env.NEXT_GMAIL_USER,
                 to: user.email,
                 subject: 'Password Reset Link',
                 text: message

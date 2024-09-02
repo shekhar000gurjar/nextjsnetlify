@@ -321,9 +321,29 @@ export default function HeaderCom({ user }) {
         router.push('/login');
     };
 
+    const handleHomeClick = () => {
+        handleClose();
+        router.push('/search-company'); // Navigate to the user profile page
+    };
+
     const handleProfileClick = () => {
         handleClose();
         router.push('/userprofile'); // Navigate to the user profile page
+    };
+
+    const handleSendRequestClick = () => {
+        handleClose();
+        router.push('/requests-sent'); // Navigate to the user profile page
+    };
+
+    const handleReceivedRequestClick = () => {
+        handleClose();
+        router.push('/requests-received'); // Navigate to the user profile page
+    };
+
+    const handleSummaryClick = () => {
+        handleClose();
+        router.push('/summary'); // Navigate to the user profile page
     };
 
     const handleListKeyDown = (event) => {
@@ -345,14 +365,19 @@ export default function HeaderCom({ user }) {
         prevOpen.current = open;
     }, [open]);
 
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    };
+
     return (
         <AppBar position="fixed" sx={{ background: "#ffffff" }} elevation={2}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Link href="/home" sx={{ display: { xs: "none", md: "flex" } }}>
+                    <Link href="/search-company" sx={{ display: { xs: "none", md: "flex" } }}>
                         <Box
                             component="img"
-                            src='/logo.png'
+                            src='/logor.png'
                             alt="logo"
                             sx={{ maxHeight: "50px", mr: 3 }}
                         />
@@ -373,7 +398,8 @@ export default function HeaderCom({ user }) {
                                 aria-haspopup="true"
                                 onClick={handleToggle}
                             >
-                                {user.first_name} {user.last_name}
+                                {/* {user.first_name} {user.last_name} */}
+                                {capitalizeFirstLetter(user?.first_name)} {capitalizeFirstLetter(user?.last_name)}
                             </Typography>
                             <Popper
                                 open={open}
@@ -399,8 +425,11 @@ export default function HeaderCom({ user }) {
                                                     aria-labelledby="composition-button"
                                                     onKeyDown={handleListKeyDown}
                                                 >
+                                                    <MenuItem onClick={handleProfileClick}>Home</MenuItem>
                                                     <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-                                                    {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
+                                                    <MenuItem onClick={handleSendRequestClick}>Sent Requests</MenuItem>
+                                                    <MenuItem onClick={handleReceivedRequestClick}>Received Requests</MenuItem>
+                                                    <MenuItem onClick={handleSummaryClick}>Account Summary</MenuItem>
                                                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                                 </MenuList>
                                             </ClickAwayListener>
