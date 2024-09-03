@@ -90,10 +90,11 @@ export default async function handler(req, res) {
 
             <p>Job Link :- ${job_link}.</p>
 
-            <p>
-                <a href="http://localhost:3000/requests-received" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Accept</a>
-                <a href="http://localhost:3000/requests-received" style="background-color: #f44336; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reject</a>
+           <p>
+              <a href="${process.env.NEXT_PUBLIC_API_URL}requests-received" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Accept</a>
+              <a href="${process.env.NEXT_PUBLIC_API_URL}requests-received" style="background-color: #f44336; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reject</a>
             </p>
+
     
             <p>Regards,</p>
             <p>RMJ</p>
