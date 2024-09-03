@@ -118,18 +118,18 @@
 //                                 <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>UPI ID:</Typography>
 //                                 <Typography variant='body2' color='text.secondary' fontSize='14px'>{user.upi_id}</Typography>
 //                             </Stack>
-//                             <Stack direction='row'>
-//                                 <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Referral Requests Pending:</Typography>
-//                                 <Typography variant='body2' color='text.secondary' fontSize='14px'>$</Typography>
-//                             </Stack>
-//                             <Stack direction='row'>
-//                                 <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Rewards Pending:</Typography>
-//                                 <Typography variant='body2' color='text.secondary' fontSize='14px'></Typography>
-//                             </Stack>
-//                             <Stack direction='row'>
-//                                 <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Rewards Earned:</Typography>
-//                                 <Typography variant='body2' color='text.secondary' fontSize='14px'>$</Typography>
-//                             </Stack>
+// <Stack direction='row'>
+//     <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Referral Requests Pending:</Typography>
+//     <Typography variant='body2' color='text.secondary' fontSize='14px'>$</Typography>
+// </Stack>
+// <Stack direction='row'>
+//     <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Rewards Pending:</Typography>
+//     <Typography variant='body2' color='text.secondary' fontSize='14px'></Typography>
+// </Stack>
+// <Stack direction='row'>
+//     <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Rewards Earned:</Typography>
+//     <Typography variant='body2' color='text.secondary' fontSize='14px'>$</Typography>
+// </Stack>
 //                         </Stack>
 
 //                         <Stack mt={4}>
@@ -264,6 +264,18 @@ export default function UserProfile() {
                                 <Typography variant='body2' color='text.secondary' fontSize='14px'>{user.upi_id}</Typography>
                             </Stack>
                             {/* Additional Profile Fields */}
+                            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+                                <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Referral Requests Pending:</Typography>
+                                <Typography variant='body2' color='text.secondary' fontSize='14px'>$</Typography>
+                            </Stack>
+                            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+                                <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Rewards Pending:</Typography>
+                                <Typography variant='body2' color='text.secondary' fontSize='14px'></Typography>
+                            </Stack>
+                            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+                                <Typography variant="body2" fontWeight='600' color='text.hint' gutterBottom='false' fontSize='14px' sx={{ width: '32%' }}>Rewards Earned:</Typography>
+                                <Typography variant='body2' color='text.secondary' fontSize='14px'>$</Typography>
+                            </Stack>
                         </Stack>
 
                         <Stack mt={4} spacing={2}>
