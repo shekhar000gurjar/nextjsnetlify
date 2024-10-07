@@ -618,19 +618,47 @@ export default function FirebaseSocial() {
             justifyContent={{ xs: 'space-around', sm: 'space-between' }}
         >
             <Button
+                // variant="outlined"
+                // color="primary"
+                // fullWidth
+                // startIcon={<img src='/images/icons/google.svg' alt="Google" />}
                 variant="outlined"
-                color="primary"
-                fullWidth
-                startIcon={<img src='/images/icons/google.svg' alt="Google" />}
+                sx={{
+                    color:"text.secondary",
+                    textTransform: 'none',
+                    borderRadius: '24px',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    width: '45%',
+                    borderColor: '#E5E7EB',
+                    backgroundColor:"#E5E7EB",
+                    '&:hover': {
+                        borderColor: '#D1D5DB',
+                    }
+                }}
                 onClick={handleGoogleLogin}
             >
                 Google
             </Button>
             <Button
+                // variant="outlined"
+                // color="primary"
+                // fullWidth
+                // startIcon={<img src='/images/icons/linkedin.svg' alt="LinkedIn" />}
                 variant="outlined"
-                color="primary"
-                fullWidth
-                startIcon={<img src='/images/icons/linkedin.svg' alt="LinkedIn" />}
+                sx={{
+                    color:"text.secondary",
+                    textTransform: 'none',
+                    borderRadius: '24px',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    width: '45%',
+                    borderColor: '#E5E7EB',
+                    backgroundColor:"#E5E7EB",
+                    '&:hover': {
+                        borderColor: '#D1D5DB',
+                    }
+                }}
                 onClick={handleLinkedInLogin}
             >
                 LinkedIn

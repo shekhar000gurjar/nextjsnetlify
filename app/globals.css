@@ -49,9 +49,9 @@
   transform: translateX(10px);
 }
 
-.mainMenu {
+/* .mainMenu {
   color: #000080;
-}
+} */
 
 .mainMenu {
   padding: 0 15px;
@@ -66,9 +66,9 @@
   background-repeat: no-repeat;
 }
 
-body {
+/* body {
   background-image: url('/images/referMyJobBackground.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-}
+} */
