@@ -114,8 +114,6 @@
 //     );
 // };
 
-
-
 // export default function CompanyPage() {
 //     return (
 //         <Suspense fallback={<CircularProgress />}>
@@ -123,7 +121,6 @@
 //         </Suspense>
 //     );
 // }
-
 
 // "use client";
 // import React, { Suspense, useEffect, useState } from 'react';
@@ -269,149 +266,424 @@
 //     );
 // }
 
+//------------------------------------------------------------------------------
+
+// "use client";
+// import React, { Suspense, useEffect, useState } from "react";
+// import {
+//   Box,
+//   Typography,
+//   FormControl,
+//   RadioGroup,
+//   FormControlLabel,
+//   Radio,
+//   Button,
+//   CircularProgress,
+//   Paper,
+// } from "@mui/material";
+// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+// import { useSearchParams, useRouter } from "next/navigation";
+// import { postResponse } from "../components/_apihandler";
+// import MainLayout from "../layouts/MainLayout";
+
+// function CompanyPageComponent() {
+//   const searchParams = useSearchParams();
+//   const router = useRouter();
+//   const [companyName, setCompanyName] = useState("");
+//   const [users, setUsers] = useState([]);
+//   const [selectedUser, setSelectedUser] = useState("");
+//   const [loading, setLoading] = useState(false);
+
+//   useEffect(() => {
+//     const name = searchParams.get("name");
+//     if (name) {
+//       allUserList(name);
+//       setCompanyName(name);
+//     }
+//   }, [searchParams]);
+
+//   const allUserList = async (name) => {
+//     setLoading(true);
+//     try {
+//       const user = localStorage.getItem("user");
+//       const parsedUser = JSON.parse(user);
+//       const loggedInUserId = parsedUser._id;
+//       const response = await postResponse("/api/user-list", {
+//         company_name: name,
+//       });
+//       if (response.status === 200 && response.data) {
+//         const filteredUsers = response.data.data.filter(
+//           (user) => user._id !== loggedInUserId
+//         );
+//         setUsers(filteredUsers);
+//       } else {
+//         setUsers([]);
+//       }
+//     } catch (error) {
+//       console.error(error);
+//       setUsers([]);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleRadioChange = (event) => {
+//     setSelectedUser(event.target.value);
+//   };
+
+//   const handleNextClick = () => {
+//     if (selectedUser) {
+//       router.push(`/send-request?userId=${selectedUser}`);
+//     } else {
+//       alert("Please select a user");
+//     }
+//   };
+
+//   const capitalizeFirstLetter = (string) => {
+//     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+//   };
+
+//   return (
+//     <MainLayout
+//       homeIcon={true}
+//       headerText={"Select Member"}
+//       homeIconSide={"left"}
+//       page={"company-page"}
+//     >
+//       <Box
+//         className="reBg"
+//         pb={10}
+//         display="flex"
+//         flexDirection="column"
+//         alignItems="center"
+//       >
+//         <Paper
+//           sx={{
+//             marginTop: "20px",
+//             padding: "20px",
+//             color: "white",
+//             backgroundColor: "#3f51b5",
+//             borderRadius: "10px",
+//             textAlign: "center",
+//             width: "80%",
+//             maxWidth: "500px",
+//           }}
+//         >
+//           <Typography variant="h5">
+//             {capitalizeFirstLetter(companyName)}
+//           </Typography>
+//         </Paper>
+//         <Paper
+//           sx={{
+//             backgroundColor: "rgba(240, 236, 236, 0.43)",
+//             padding: "20px",
+//             borderRadius: "15px",
+//             marginTop: "20px",
+//             width: "80%",
+//             maxWidth: "500px",
+//           }}
+//         >
+//           {loading ? (
+//             <Box
+//               display="flex"
+//               justifyContent="center"
+//               alignItems="center"
+//               height="100%"
+//             >
+//               <CircularProgress />
+//             </Box>
+//           ) : (
+//             <FormControl component="fieldset" sx={{ width: "100%" }}>
+//               <Typography variant="subtitle1" gutterBottom align="center">
+//                 List of users registered with their current company as{" "}
+//                 {`'${companyName}'`}
+//               </Typography>
+//               <RadioGroup
+//                 name="userSelection"
+//                 value={selectedUser}
+//                 onChange={handleRadioChange}
+//               >
+//                 {users.length > 0 ? (
+//                   users.map((user, index) => (
+//                     <FormControlLabel
+//                       key={index}
+//                       value={user._id}
+//                       control={<Radio />}
+//                       label={`${user.first_name} ${user.last_name} - ${user.current_location}`}
+//                     />
+//                   ))
+//                 ) : (
+//                   <Typography variant="body1" align="center">
+//                     No users found
+//                   </Typography>
+//                 )}
+//               </RadioGroup>
+//             </FormControl>
+//           )}
+//           <Box
+//             sx={{
+//               display: "flex",
+//               justifyContent: "center",
+//               marginTop: "20px",
+//             }}
+//           >
+//             <Button
+//               sx={{ borderRadius: "20px", backgroundColor: "#3f51b5" }}
+//               variant="contained"
+//               endIcon={<ArrowForwardIcon />}
+//               onClick={handleNextClick}
+//               disabled={!selectedUser} // Disable the button if no user is selected
+//             >
+//               Next
+//             </Button>
+//           </Box>
+//         </Paper>
+//       </Box>
+//     </MainLayout>
+//   );
+// }
+
+// export default function CompanyPage() {
+//   return (
+//     <Suspense fallback={<CircularProgress />}>
+//       <CompanyPageComponent />
+//     </Suspense>
+//   );
+// }
+
 "use client";
-import React, { Suspense, useEffect, useState } from 'react';
-import { Box, Typography, FormControl, RadioGroup, FormControlLabel, Radio, Button, CircularProgress, Paper } from '@mui/material';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { postResponse } from '../components/_apihandler';
-import MainLayout from '../layouts/MainLayout';
+import React, { Suspense, useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  FormControl,
+  FormControlLabel,
+  Checkbox,
+  Avatar,
+  Button,
+  CircularProgress,
+  Paper,
+} from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useSearchParams, useRouter } from "next/navigation";
+import { postResponse } from "../components/_apihandler";
+import MainLayout from "../layouts/MainLayout";
 
 function CompanyPageComponent() {
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    const [companyName, setCompanyName] = useState('');
-    const [users, setUsers] = useState([]);
-    const [selectedUser, setSelectedUser] = useState('');
-    const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [companyName, setCompanyName] = useState("");
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        const name = searchParams.get('name');
-        if (name) {
-            allUserList(name);
-            setCompanyName(name);
-        }
-    }, [searchParams]);
+  useEffect(() => {
+    const name = searchParams.get("name");
+    if (name) {
+      allUserList(name);
+      setCompanyName(name);
+    }
+  }, [searchParams]);
 
-    const allUserList = async (name) => {
-        setLoading(true);
-        try {
-            const user = localStorage.getItem('user');
-            const parsedUser = JSON.parse(user);
-            const loggedInUserId = parsedUser._id;
-            const response = await postResponse("/api/user-list", { company_name: name });
-            if (response.status === 200 && response.data) {
-                const filteredUsers = response.data.data.filter(user => user._id !== loggedInUserId);
-                setUsers(filteredUsers);
-            } else {
-                setUsers([]);
-            }
-        } catch (error) {
-            console.error(error);
-            setUsers([]);
-        } finally {
-            setLoading(false);
-        }
-    };
+  const allUserList = async (name) => {
+    setLoading(true);
+    try {
+      const user = localStorage.getItem("user");
+      const parsedUser = JSON.parse(user);
+      const loggedInUserId = parsedUser._id;
+      const response = await postResponse("/api/user-list", {
+        company_name: name,
+      });
+      if (response.status === 200 && response.data) {
+        const filteredUsers = response.data.data.filter(
+          (user) => user._id !== loggedInUserId
+        );
+        setUsers(filteredUsers);
+      } else {
+        setUsers([]);
+      }
+    } catch (error) {
+      console.error(error);
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handleRadioChange = (event) => {
-        setSelectedUser(event.target.value);
-    };
+  const calculateTimeAgo = (createdAt) => {
+    const createdDate = new Date(createdAt);
+    const currentDate = new Date();
+    const differenceInTime = currentDate - createdDate;
 
-    const handleNextClick = () => {
-        if (selectedUser) {
-            router.push(`/send-request?userId=${selectedUser}`);
-        } else {
-            alert("Please select a user");
-        }
-    };
+    const differenceInYears = differenceInTime / (1000 * 60 * 60 * 24 * 365);
+    const differenceInMonths = differenceInTime / (1000 * 60 * 60 * 24 * 30);
+    const differenceInDays = differenceInTime / (1000 * 60 * 60 * 24);
+    const differenceInHours = differenceInTime / (1000 * 60 * 60);
 
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-    };
+    if (differenceInYears >= 1) {
+      return `${Math.floor(differenceInYears)} years ago`;
+    } else if (differenceInMonths >= 1) {
+      return `${Math.floor(differenceInMonths)} months ago`;
+    } else if (differenceInDays >= 1) {
+      return `${Math.floor(differenceInDays)} days ago`;
+    } else {
+      return `${Math.floor(differenceInHours)} hours ago`;
+    }
+  };
 
-    return (
-        <MainLayout>
-            <Box className='reBg' pb={10} display="flex" flexDirection="column" alignItems="center">
-                <Paper
-                    sx={{
-                        marginTop: '20px',
-                        padding: '20px',
-                        color: 'white',
-                        backgroundColor: '#3f51b5',
-                        borderRadius: '10px',
-                        textAlign: 'center',
-                        width: '80%',
-                        maxWidth: '500px'
-                    }}
-                >
-                    <Typography variant="h5">
-                        {capitalizeFirstLetter(companyName)}
-                    </Typography>
-                </Paper>
-                <Paper
-                    sx={{
-                        backgroundColor: 'rgba(240, 236, 236, 0.43)',
-                        padding: '20px',
-                        borderRadius: '15px',
-                        marginTop: '20px',
-                        width: '80%',
-                        maxWidth: '500px'
-                    }}
-                >
-                    {loading ? (
-                        <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-                            <CircularProgress />
-                        </Box>
-                    ) : (
-                        <FormControl component="fieldset" sx={{ width: '100%' }}>
-                            <Typography variant="subtitle1" gutterBottom align="center">
-                                List of users registered with their current company as {`'${companyName}'`}
-                            </Typography>
-                            <RadioGroup
-                                name="userSelection"
-                                value={selectedUser}
-                                onChange={handleRadioChange}
-                            >
-                                {users.length > 0 ? (
-                                    users.map((user, index) => (
-                                        <FormControlLabel
-                                            key={index}
-                                            value={user._id}
-                                            control={<Radio />}
-                                            label={`${user.first_name} ${user.last_name} - ${user.current_location}`}
-                                        />
-                                    ))
-                                ) : (
-                                    <Typography variant="body1" align="center">
-                                        No users found
-                                    </Typography>
-                                )}
-                            </RadioGroup>
-                        </FormControl>
-                    )}
-                    <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                        <Button
-                            sx={{ borderRadius: '20px', backgroundColor: '#3f51b5' }}
-                            variant="contained"
-                            endIcon={<ArrowForwardIcon />}
-                            onClick={handleNextClick}
-                            disabled={!selectedUser} // Disable the button if no user is selected
-                        >
-                            Next
-                        </Button>
-                    </Box>
-                </Paper>
+  const handleCheckboxChange = (event) => {
+    setSelectedUser(event.target.value);
+  };
+
+  const handleNextClick = () => {
+    if (selectedUser) {
+      router.push(`/send-request?userId=${selectedUser}`);
+    } else {
+      alert("Please select a user");
+    }
+  };
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
+  return (
+    <MainLayout
+      homeIcon={true}
+      headerText={"Select Member"}
+      homeIconSide={"left"}
+      page={"company-page"}
+    >
+      <Box
+        pb={10}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        sx={{ padding: "20px", width: "100%", color:'black' }}
+      >
+        {/* <Paper
+          sx={{
+            marginTop: "20px",
+            padding: "20px",
+            backgroundColor: "#f5f5f5",
+            borderRadius: "10px",
+            textAlign: "center",
+            width: "80%",
+            maxWidth: "1200px",
+          }}
+        > */}
+        <Typography variant="h5">
+          {capitalizeFirstLetter(companyName)}
+        </Typography>
+        {/* </Paper> */}
+        <Paper
+          sx={{
+            backgroundColor: "#ffffff",
+            padding: "30px",
+            borderRadius: "15px",
+            marginTop: "20px",
+            width: {xs:"90%", md:"70%"},
+            maxWidth: "1200px",
+            color:'black'
+          }}
+        >
+          {loading ? (
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              height="100%"
+            >
+              <CircularProgress />
             </Box>
-        </MainLayout>
-    );
+          ) : (
+            <FormControl component="fieldset" sx={{ width: "100%" }}>
+              {/* <Typography variant="subtitle1" gutterBottom align="center">
+                Select a member from the company: {companyName}
+              </Typography> */}
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2, color:'black' }}>
+                {users.length > 0 ? (
+                  users.map((user, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        borderBottom: "1px solid #e0e0e0",
+                        padding: {xs:"15px 0px", md:"15px 40px"},
+                      }}
+                    >
+                      <Avatar
+                        alt={user.first_name}
+                        src={user.profile_picture_url}
+                        sx={{ width: 60, height: 60, marginRight: "15px" }}
+                      />
+                      <Box flexGrow={1}>
+                        <Typography variant="h6">
+                          {user.first_name} {user.last_name}
+                        </Typography>
+                        <Typography variant="body2">
+                          Sector - {user.sector} | Referrals -{" "}
+                          {user && user?.referrals ? user?.referrals : " "} || |
+                          Joined {calculateTimeAgo(user.createdAt)} years ago
+                        </Typography>
+                        <Typography variant="body2">
+                          {user.current_location}
+                        </Typography>
+                      </Box>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            value={user._id}
+                            checked={selectedUser === user._id}
+                            onChange={handleCheckboxChange}
+                          />
+                        }
+                        label=""
+                      />
+                    </Box>
+                  ))
+                ) : (
+                  <Typography variant="body1" align="center">
+                    No users found
+                  </Typography>
+                )}
+              </Box>
+            </FormControl>
+          )}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "30px",
+            }}
+          >
+            <Button
+              sx={{
+                borderRadius: "20px",
+                backgroundColor: "#6279f9",
+                width: "80%",
+                height: "50px",
+                fontWeight: "bold",
+              }}
+              variant="contained"
+              endIcon={<ArrowForwardIcon />}
+              onClick={handleNextClick}
+              disabled={!selectedUser} // Disable the button if no user is selected
+            >
+              NEXT
+            </Button>
+          </Box>
+        </Paper>
+      </Box>
+    </MainLayout>
+  );
 }
 
 export default function CompanyPage() {
-    return (
-        <Suspense fallback={<CircularProgress />}>
-            <CompanyPageComponent />
-        </Suspense>
-    );
+  return (
+    <Suspense fallback={<CircularProgress />}>
+      <CompanyPageComponent />
+    </Suspense>
+  );
 }
-

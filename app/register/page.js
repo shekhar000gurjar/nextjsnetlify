@@ -611,19 +611,19 @@
 //                                         error={!!errors.sector}
 //                                         MenuProps={MenuProps}
 //                                     >
-//                                         <MenuItem value="" disabled>Select your sector</MenuItem>
-//                                         <MenuItem value="IT & Technology">IT & Technology</MenuItem>
-//                                         <MenuItem value="Service">Service</MenuItem>
-//                                         <MenuItem value="Government">Government</MenuItem>
-//                                         <MenuItem value="Startup or Product based">Startup or Product based</MenuItem>
-//                                         <MenuItem value="Business Management">Business Management</MenuItem>
-//                                         <MenuItem value="Digital Media Marketing">Digital Media Marketing</MenuItem>
-//                                         <MenuItem value="Sales">Sales</MenuItem>
-//                                         <MenuItem value="Marketing">Marketing</MenuItem>
-//                                         <MenuItem value="Education">Education</MenuItem>
-//                                         <MenuItem value="Textile">Textile</MenuItem>
-//                                         <MenuItem value="Hospitality">Hospitality</MenuItem>
-//                                         <MenuItem value="Civil">Civil</MenuItem>
+                                        // <MenuItem value="" disabled>Select your sector</MenuItem>
+                                        // <MenuItem value="IT & Technology">IT & Technology</MenuItem>
+                                        // <MenuItem value="Service">Service</MenuItem>
+                                        // <MenuItem value="Government">Government</MenuItem>
+                                        // <MenuItem value="Startup or Product based">Startup or Product based</MenuItem>
+                                        // <MenuItem value="Business Management">Business Management</MenuItem>
+                                        // <MenuItem value="Digital Media Marketing">Digital Media Marketing</MenuItem>
+                                        // <MenuItem value="Sales">Sales</MenuItem>
+                                        // <MenuItem value="Marketing">Marketing</MenuItem>
+                                        // <MenuItem value="Education">Education</MenuItem>
+                                        // <MenuItem value="Textile">Textile</MenuItem>
+                                        // <MenuItem value="Hospitality">Hospitality</MenuItem>
+                                        // <MenuItem value="Civil">Civil</MenuItem>
 //                                     </Select>
 //                                     {errors.sector && <FormHelperText error>{errors.sector}</FormHelperText>}
 //                                 </Stack>
@@ -1364,15 +1364,30 @@ export default function Register() {
         >
           <Toolbar sx={{ justifyContent: "space-between" }}>
             {/* Logo */}
-            <Typography
-              variant="h6"
-              component={Link}
-              href="/"
-              sx={{ textDecoration: "none", color: "black" }}
+            <Box
+              sx={{
+                display: { xs: "none", md: "flex" },
+                alignItems: "center",
+                gap: 2,
+              }}
             >
-              ReferMyJob
-            </Typography>
-
+              <Link href="/" passHref>
+                <Box
+                  component="img"
+                  src="/images/logo_trademarked.png" // Replace with actual logo path
+                  alt="logo"
+                  sx={{ height: "60px", cursor: "pointer" }}
+                />
+              </Link>
+              <Typography
+                variant="h5"
+                // component={Link}
+                // href="/"
+                sx={{ textDecoration: "none", color: "black" }}
+              >
+                ReferMyJob
+              </Typography>
+            </Box>
             {/* Register and Profile */}
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               <Button
@@ -1383,7 +1398,8 @@ export default function Register() {
                   textTransform: "none",
                   borderRadius: "24px",
                   px: 3,
-                  color: "black",
+                  color: "white",
+                  backgroundColor: "#4D5DFB",
                   borderColor: "#E5E7EB",
                   "&:hover": {
                     borderColor: "#D1D5DB",
@@ -1392,7 +1408,7 @@ export default function Register() {
               >
                 Login
               </Button>
-              <Avatar alt="Profile" src="/images/profile.jpg" />
+              <Avatar alt="Profile" />
             </Box>
           </Toolbar>
         </AppBar>
@@ -1410,7 +1426,7 @@ export default function Register() {
             ReferMyJob
           </Typography>
         </Box>
-      
+
         <Grid container spacing={4}>
           <Grid
             item
@@ -1453,14 +1469,14 @@ export default function Register() {
               }
             }
           >
-              <Typography
-          variant="h4"
-          fontWeight="bold"
-          textAlign="center"
-          sx={{ mb: 2 }}
-        >
-          Register to start sending job referrals
-        </Typography>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              textAlign="center"
+              sx={{ mb: 2 }}
+            >
+              Register to start sending job referrals
+            </Typography>
             <Stack spacing={3}>
               <Stack direction="row" spacing={2}>
                 <Stack spacing={1} sx={{ width: "100%" }}>
@@ -1751,9 +1767,10 @@ export default function Register() {
         <Box
           component="footer"
           sx={{
-            py: 4,
-            backgroundColor: "#F9FAFB",
-            borderTop: "1px solid #E5E7EB",
+            // py: 4,
+            mt:4,
+            // backgroundColor: "#F9FAFB",
+            // borderTop: "1px solid #E5E7EB",
             display: { xs: "none", md: "block" },
           }}
         >

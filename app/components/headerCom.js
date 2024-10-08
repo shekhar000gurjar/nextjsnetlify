@@ -554,6 +554,272 @@
 //   );
 // }
 
+//==================================
+
+// "use client";
+// import {
+//   AppBar,
+//   Box,
+//   Container,
+//   Toolbar,
+//   Typography,
+//   IconButton,
+//   Avatar,
+//   Button,
+//   Drawer,
+//   List,
+//   ListItem,
+//   ListItemText,
+//   InputBase,
+// } from "@mui/material";
+// import React, { useState } from "react";
+// import MenuIcon from "@mui/icons-material/Menu";
+// import SearchIcon from "@mui/icons-material/Search";
+// import Link from "next/link";
+// import { useRouter } from "next/navigation";
+// import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+
+// export default function HeaderCom({
+//   user,
+//   homeIcon,
+//   headerText,
+//   homeIconSide,
+//   page,
+// }) {
+//   const [drawerOpen, setDrawerOpen] = useState(false);
+//   const router = useRouter();
+
+//   const handleDrawerToggle = () => {
+//     setDrawerOpen(!drawerOpen);
+//   };
+
+//   const handleLoginClick = () => {
+//     router.push("/login");
+//   };
+
+//   const handleProfileClick = () => {
+//     router.push("/profile");
+//   };
+
+//   const menuItems = [
+//     { name: "Home", path: "/" },
+//     { name: "About", path: "/about" },
+//     { name: "Services", path: "/services" },
+//     { name: "Contact", path: "/contact" },
+//   ];
+//   let headerLabel = " Refer My Job";
+//   if (page === "search-company") {
+//     headerLabel = headerText;
+//   }
+//   console.log(homeIcon, headerText, homeIconSide, page, "headerComponenet");
+
+//   return (
+//     <AppBar position="fixed" sx={{ background: "#ffffff" }} elevation={2}>
+//       <Container maxWidth="xl" sx={{ alignItems: "center" }}>
+//         <Toolbar disableGutters>
+//           {/* Mobile Menu (Hamburger Menu) */}
+//           <Box sx={{ display: { xs: "block", sm: "block", md: "none" } }}>
+//             <IconButton
+//               edge="start"
+//               color="black"
+//               aria-label="menu"
+//               onClick={handleDrawerToggle}
+//             >
+//               <MenuIcon />
+//             </IconButton>
+//             <Drawer
+//               anchor="left"
+//               open={drawerOpen}
+//               onClose={handleDrawerToggle}
+//             >
+//               <List>
+//                 {menuItems.map((item) => (
+//                   <ListItem
+//                     button
+//                     key={item.name}
+//                     onClick={() => router.push(item.path)}
+//                   >
+//                     <ListItemText primary={item.name} />
+//                   </ListItem>
+//                 ))}
+//               </List>
+//             </Drawer>
+//           </Box>
+
+//           {/* Logo and Title (Center-aligned on mobile, no logo on desktop) */}
+//           <Box sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
+//             <Link href="/" passHref>
+//               <Box
+//                 component="img"
+//                 src="/images/logo_trademarked.png" // Replace with actual logo path
+//                 alt="logo"
+//                 sx={{ height: "60px", cursor: "pointer" }}
+//               />
+//             </Link>
+//           </Box>
+// <Box
+//   sx={{
+//     display: "flex",
+//     alignItems: "center",
+//     flexGrow: 1,
+//     justifyContent: {
+//       xs: "flex-start",
+//       sm: "flex-start",
+//       md: "flex-start",
+//     },
+//     width: "auto",
+//   }}
+// >
+//   <Typography
+//     variant="h6"
+//     noWrap
+//     sx={{
+//       color: "black",
+//       cursor: "pointer",
+//       fontWeight: "bold",
+//       ml: { xs: 0, md: 1 }, // Ensure text is centered on mobile
+//       display: { xs: "none", sm: "none", md: "flex" },
+//     }}
+//   >
+//     Refer My Job
+//   </Typography>
+//             <Typography
+//               variant="body"
+//               noWrap
+//               sx={{
+//                 color: "black",
+//                 cursor: "pointer",
+//                 // fontWeight: "bold",
+//                 // ml: { xs: 0, md: 1 }, // Ensure text is centered on mobile
+//                 display: { xs: "flex", sm: "flex", md: "none" },
+//               }}
+//             >
+//               {homeIcon ? headerLabel : " "}
+//             </Typography>
+//           </Box>
+
+//           {/* Desktop Menu */}
+//           <Box
+//             sx={{
+//               display: { xs: "none", sm: "none", md: "flex" },
+//               flexGrow: 1,
+//               justifyContent: user ? "end" : "start",
+//             }}
+//           >
+//             {menuItems.map((item) => (
+//               <Button
+//                 key={item.name}
+//                 sx={{ color: "black", mx: 2, fontWeight: 500 }}
+//                 onClick={() => router.push(item.path)}
+//               >
+//                 {item.name}
+//               </Button>
+//             ))}
+//           </Box>
+
+//           {/* Search Bar */}
+//           <Box
+//             sx={{
+//               display: user ? "none" : { xs: "none", sm: "none", md: "flex" },
+//               alignItems: "center",
+//               backgroundColor: "#f1f1f1",
+//               padding: "0 12px",
+//               borderRadius: "24px",
+//               width: "200px",
+//             }}
+//           >
+//             <SearchIcon sx={{ color: "#8a8a8a" }} />
+//             <InputBase
+//               placeholder="Search"
+//               sx={{
+//                 ml: 1,
+//                 flex: 1,
+//                 color: "#8a8a8a",
+//               }}
+//             />
+//           </Box>
+
+//           {/* Sign Up / Log In Button or User Profile (Hide on Mobile) */}
+//           <Box
+//             sx={{
+//               display: { xs: "none", sm: "flex", md: "flex" },
+//               alignItems: "center",
+//             }}
+//           >
+//             {!user ? (
+//               <Button
+//                 variant="contained"
+//                 color="primary"
+//                 sx={{
+//                   backgroundColor: "#6756f0b8",
+//                   borderRadius: "24px",
+//                   textTransform: "none",
+//                   fontWeight: "bold",
+//                   ml: 2,
+//                 }}
+//                 onClick={handleLoginClick}
+//               >
+//                 Sign Up / Log In
+//               </Button>
+//             ) : (
+//               <Box sx={{ display: "flex", alignItems: "center" }}>
+//                 <Typography
+//                   sx={{
+//                     display: { xs: "none", sm: "none", md: "block" },
+//                     mr: 1,
+//                   }}
+//                 >
+//                   {user.firstName} {user.lastName}
+//                 </Typography>
+//                 <IconButton
+//                   onClick={handleProfileClick}
+//                   sx={{ display: { xs: "none", sm: "none", md: "flex" } }}
+//                 >
+//                   <Avatar alt={user.firstName} src="/profile.jpg" />
+//                 </IconButton>
+//               </Box>
+//             )}
+//           </Box>
+
+//           {/* Logo for Mobile (Hide on Desktop) */}
+//           <Box
+//             sx={{
+//               display: user ? "none" : { xs: "flex", sm: "none" },
+//               alignItems: "center",
+//             }}
+//           >
+//             <Link href="/" passHref>
+//               <Box
+//                 component="img"
+//                 src="/images/logo_trademarked.png" // Replace with actual logo path
+//                 alt="logo"
+//                 sx={{ height: "50px", cursor: "pointer" }}
+//               />
+//             </Link>
+//           </Box>
+//           <Box
+//             sx={{
+//               display: { xs: "flex", sm: "flex", md: "none" },
+//               alignItems: "center",
+//             }}
+//           >
+//             <Link href="/" passHref>
+//               <IconButton
+//                 edge="start"
+//                 color="black"
+//                 aria-label="home"
+//                 // onClick={handleDrawerToggle}
+//               >
+//                 <HomeOutlinedIcon />
+//               </IconButton>
+//             </Link>
+//           </Box>
+//         </Toolbar>
+//       </Container>
+//     </AppBar>
+//   );
+// }
+
 "use client";
 import {
   AppBar,
@@ -575,13 +841,25 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 
-export default function HeaderCom({ user }) {
+export default function HeaderCom({
+  user,
+  homeIcon,
+  headerText,
+  homeIconSide,
+  page,
+}) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerOpenRight, setDrawerOpenRight] = useState(false);
+
   const router = useRouter();
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
+  };
+  const handleDrawerToggleRight = () => {
+    setDrawerOpenRight(!drawerOpenRight);
   };
 
   const handleLoginClick = () => {
@@ -599,12 +877,25 @@ export default function HeaderCom({ user }) {
     { name: "Contact", path: "/contact" },
   ];
 
+  let headerLabel = "Refer My Job";
+  if (page === "search-company") {
+    headerLabel = headerText;
+  }
+  if (page === "company-page") {
+    headerLabel = headerText;
+  }
+
   return (
     <AppBar position="fixed" sx={{ background: "#ffffff" }} elevation={2}>
-      <Container maxWidth="xl" sx={{ alignItems: "center" }}>
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Mobile Menu (Hamburger Menu) */}
-          <Box sx={{ display: { xs: "block", sm: "none", md: "none" } }}>
+          <Box
+            sx={{
+              display:
+                page === "search-company" ? { xs: "flex", md: "none" } : "none",
+            }}
+          >
             <IconButton
               edge="start"
               color="black"
@@ -632,18 +923,57 @@ export default function HeaderCom({ user }) {
             </Drawer>
           </Box>
 
-          {/* Logo and Title (Center-aligned on mobile, no logo on desktop) */}
-          <Box sx={{ display: { xs: "none", sm: "block", md: "block" } }}>
-            <IconButton
-              edge="start"
-              color="black"
-              aria-label="menu"
-              // onClick={handleDrawerToggle}
-            >
-              <MenuIcon />
-            </IconButton>
+          <Box
+            sx={{
+              display:
+                page === "search-company" ? "none" : { xs: "flex", md: "none" },
+            }}
+          >
+            <Link href="/" passHref>
+              <IconButton edge="start" color="black" aria-label="home">
+                <HomeOutlinedIcon />
+              </IconButton>
+            </Link>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1, justifyContent: { xs: 'center', sm: 'center', md: 'flex-start' } }}>
+
+          {/* Logo (Visible on Desktop) */}
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
+            <Link href="/" passHref>
+              <Box
+                component="img"
+                src="/images/logo_trademarked.png"
+                alt="logo"
+                sx={{ height: "50px", cursor: "pointer" }}
+              />
+            </Link>
+          </Box>
+
+          {/* Header Text */}
+          {/* <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flexGrow: 1,
+              justifyContent: {
+                xs: "flex-start",
+                sm: "flex-start",
+                md: "flex-start",
+              },
+              width: "auto",
+            }}
+          >
+            
+          </Box> */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "start",
+              flexGrow: 1,
+              justifyContent: user
+                ? { xs: "flex-start", md: "flex-start" }
+                : { xs: "center", md: "flex-start" },
+            }}
+          >
             <Typography
               variant="h6"
               noWrap
@@ -652,18 +982,35 @@ export default function HeaderCom({ user }) {
                 cursor: "pointer",
                 fontWeight: "bold",
                 ml: { xs: 0, md: 1 }, // Ensure text is centered on mobile
+                display: { xs: "none", sm: "none", md: "flex" },
               }}
             >
               Refer My Job
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "black",
+                fontWeight: "bold",
+                textAlign: "start",
+                whiteSpace: "normal", // Allow breaking lines
+                wordWrap: "break-word", // Support long text wrap
+                fontSize: { xs: "14px", sm: "16px", md: "18px" }, // Responsive font sizes
+                lineHeight: "1.2", // Line height for better readability
+                maxWidth: { xs: "80%", sm: "70%", md: "50%" }, // Max width to avoid overflow
+                display: { xs: "flex", sm: "flex", md: "none" },
+              }}
+            >
+              {headerLabel}
             </Typography>
           </Box>
 
           {/* Desktop Menu */}
           <Box
             sx={{
-              display: { xs: "none", sm: "flex", md: "flex" },
+              display: { xs: "none", md: "flex" },
               flexGrow: 1,
-              justifyContent: "start",
+              justifyContent: user ? "end" : "start",
             }}
           >
             {menuItems.map((item) => (
@@ -680,7 +1027,7 @@ export default function HeaderCom({ user }) {
           {/* Search Bar */}
           <Box
             sx={{
-              display: { xs: "none", sm: "none", md: "flex" },
+              display: user ? "none" : { xs: "none", md: "flex" }, //{ xs: "none", md: "flex" }
               alignItems: "center",
               backgroundColor: "#f1f1f1",
               padding: "0 12px",
@@ -699,8 +1046,8 @@ export default function HeaderCom({ user }) {
             />
           </Box>
 
-          {/* Sign Up / Log In Button or User Profile (Hide on Mobile) */}
-          <Box sx={{ display: { xs: "none", sm: "flex", md: "flex" }, alignItems: "center" }}>
+          {/* User Profile or Login Button */}
+          <Box sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>
             {!user ? (
               <Button
                 variant="contained"
@@ -717,8 +1064,13 @@ export default function HeaderCom({ user }) {
                 Sign Up / Log In
               </Button>
             ) : (
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Typography sx={{ display: { xs: "none", md: "block" }, mr: 1 }}>
+              <Box
+                sx={{
+                  display: { xs: "none", sm: "none", md: "flex" },
+                  alignItems: "center",
+                }}
+              >
+                <Typography sx={{ mr: 1 }}>
                   {user.firstName} {user.lastName}
                 </Typography>
                 <IconButton onClick={handleProfileClick}>
@@ -728,12 +1080,61 @@ export default function HeaderCom({ user }) {
             )}
           </Box>
 
-          {/* Logo for Mobile (Hide on Desktop) */}
-          <Box sx={{ display: { xs: "flex", sm: "none" }, alignItems: "center" }}>
+          {/* Mobile Home Icon */}
+          <Box
+            sx={{
+              display:
+                page === "search-company" ? { xs: "flex", md: "none" } : "none",
+            }}
+          >
+            <Link href="/" passHref>
+              <IconButton edge="start" color="black" aria-label="home">
+                <HomeOutlinedIcon />
+              </IconButton>
+            </Link>
+          </Box>
+          <Box
+            sx={{
+              display:
+                page === "search-company"
+                  ? "none"
+                  : user
+                  ? { xs: "flex", md: "none" }
+                  : "none",
+            }}
+          >
+            <IconButton
+              edge="start"
+              color="black"
+              aria-label="menu"
+              onClick={handleDrawerToggleRight}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Drawer
+              anchor="right"
+              open={drawerOpenRight}
+              onClose={handleDrawerToggleRight}
+            >
+              <List>
+                {menuItems.map((item) => (
+                  <ListItem
+                    button
+                    key={item.name}
+                    onClick={() => router.push(item.path)}
+                  >
+                    <ListItemText primary={item.name} />
+                  </ListItem>
+                ))}
+              </List>
+            </Drawer>
+          </Box>
+          {/* Logo (Visible on Desktop) */}
+          <Box sx={{ display: user ? "none" : { xs: "block", md: "none" } }}>
             <Link href="/" passHref>
               <Box
                 component="img"
-                src="/images/logo_trademarked.png" // Replace with actual logo path
+                src="/images/logo_trademarked.png"
                 alt="logo"
                 sx={{ height: "50px", cursor: "pointer" }}
               />

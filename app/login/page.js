@@ -413,22 +413,23 @@ export default function Login() {
                 sx={{
                   display: { xs: "none", md: "flex" },
                   alignItems: "center",
+                  gap: 2,
                 }}
               >
+                <Link href="/" passHref>
+                  <Box
+                    component="img"
+                    src="/images/logo_trademarked.png" // Replace with actual logo path
+                    alt="logo"
+                    sx={{ height: "60px", cursor: "pointer" }}
+                  />
+                </Link>
                 <Typography
-                  variant="h6"
+                  variant="h5"
                   // component={Link}
                   // href="/"
                   sx={{ textDecoration: "none", color: "black" }}
                 >
-                  <Link href="/" passHref>
-                    <Box
-                      component="img"
-                      src="/images/logo_trademarked.png" // Replace with actual logo path
-                      alt="logo"
-                      sx={{ height: "50px", cursor: "pointer" }}
-                    />
-                  </Link>
                   ReferMyJob
                 </Typography>
               </Box>
@@ -443,6 +444,7 @@ export default function Login() {
                     borderRadius: "24px",
                     px: 3,
                     color: "black",
+                    backgroundColor: "#e5e7eb",
                     borderColor: "#E5E7EB",
                     "&:hover": {
                       borderColor: "#D1D5DB",
@@ -451,11 +453,11 @@ export default function Login() {
                 >
                   Register
                 </Button>
-                <Avatar alt="Profile" src="/images/profile.jpg" />
+                <Avatar alt="Profile" />
               </Box>
             </Toolbar>
           </AppBar>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} sx={{ padding: "45px" }}>
             <Grid
               item
               xs={12}
@@ -466,13 +468,12 @@ export default function Login() {
               }}
             >
               <Box
-                sx={
-                  {
-                    // maxWidth: "500px",
-                    // mx: "auto",
-                    // mb: { xs: 2, md: 0 },
-                  }
-                }
+                sx={{
+                  // maxWidth: "500px",
+                  // mx: "auto",
+                  // mb: { xs: 2, md: 0 },
+                  paddingLeft: "100px",
+                }}
               >
                 <img
                   src="/images/desktop_ver_image.png"
@@ -502,14 +503,16 @@ export default function Login() {
                 fontWeight="bold"
                 sx={{
                   color: "black",
+                  display: { xs: "block", sm: "block", md: "none" },
                 }}
               >
                 ReferMyJob
               </Typography>
               <Typography
                 textAlign="center"
-                variant="h6"
-                color="text.secondary"
+                variant="h5"
+                // color="text.secondary"
+                sx={{ color: "black" }}
                 mb={3}
               >
                 Helping people apply for jobs through referrals
@@ -519,7 +522,12 @@ export default function Login() {
                 <Stack spacing={2}>
                   <InputLabel
                     htmlFor="email-login"
-                    sx={{ fontWeight: "400", color: "#000", textAlign: "left" }}
+                    sx={{
+                      fontWeight: "400",
+                      color: "#000",
+                      textAlign: "left",
+                      display: { xs: "block", sm: "block", md: "none" },
+                    }}
                   >
                     Email Address / Username
                   </InputLabel>
@@ -546,7 +554,12 @@ export default function Login() {
                 <Stack spacing={2} mt={2}>
                   <InputLabel
                     htmlFor="password"
-                    sx={{ fontWeight: "400", color: "#000", textAlign: "left" }}
+                    sx={{
+                      fontWeight: "400",
+                      color: "#000",
+                      textAlign: "left",
+                      display: { xs: "block", sm: "block", md: "none" },
+                    }}
                   >
                     Password
                   </InputLabel>
@@ -721,8 +734,9 @@ export default function Login() {
             component="footer"
             sx={{
               // py: 4,
-              backgroundColor: "#F9FAFB",
-              borderTop: "1px solid #E5E7EB",
+              mt: 4,
+              // backgroundColor: "#F9FAFB",
+              // borderTop: "1px solid #E5E7EB",
               display: { xs: "none", md: "block" },
             }}
           >
