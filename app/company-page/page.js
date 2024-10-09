@@ -536,8 +536,16 @@ function CompanyPageComponent() {
   };
 
   const handleNextClick = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user, "user");
     if (selectedUser) {
-      router.push(`/send-request?userId=${selectedUser}`);
+      if (user && user.registration === false) {
+        router.push(
+          `/profile-managment?userId=${selectedUser}&&user=${user._id}`
+        );
+      } else {
+        router.push(`/send-request?userId=${selectedUser}`);
+      }
     } else {
       alert("Please select a user");
     }
@@ -559,7 +567,7 @@ function CompanyPageComponent() {
         display="flex"
         flexDirection="column"
         alignItems="center"
-        sx={{ padding: "20px", width: "100%", color:'black' }}
+        sx={{ padding: "20px", width: "100%", color: "black" }}
       >
         {/* <Paper
           sx={{
@@ -582,9 +590,9 @@ function CompanyPageComponent() {
             padding: "30px",
             borderRadius: "15px",
             marginTop: "20px",
-            width: {xs:"90%", md:"70%"},
+            width: { xs: "90%", md: "70%" },
             maxWidth: "1200px",
-            color:'black'
+            color: "black",
           }}
         >
           {loading ? (
@@ -601,7 +609,14 @@ function CompanyPageComponent() {
               {/* <Typography variant="subtitle1" gutterBottom align="center">
                 Select a member from the company: {companyName}
               </Typography> */}
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2, color:'black' }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  color: "black",
+                }}
+              >
                 {users.length > 0 ? (
                   users.map((user, index) => (
                     <Box
@@ -610,7 +625,7 @@ function CompanyPageComponent() {
                         display: "flex",
                         alignItems: "center",
                         borderBottom: "1px solid #e0e0e0",
-                        padding: {xs:"15px 0px", md:"15px 40px"},
+                        padding: { xs: "15px 0px", md: "15px 40px" },
                       }}
                     >
                       <Avatar
@@ -623,9 +638,9 @@ function CompanyPageComponent() {
                           {user.first_name} {user.last_name}
                         </Typography>
                         <Typography variant="body2">
-                          Sector - {user.sector} | Referrals -{" "}
-                          {user && user?.referrals ? user?.referrals : " "} || |
-                          Joined {calculateTimeAgo(user.createdAt)} years ago
+                          Sector - {user.sector}Total Successfull Referrals -{" "}
+                          {user && user?.referrals ? user?.referrals : " "}
+                          Joined {calculateTimeAgo(user.createdAt)}
                         </Typography>
                         <Typography variant="body2">
                           {user.current_location}
