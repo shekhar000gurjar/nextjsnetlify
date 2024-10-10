@@ -423,6 +423,12 @@ export default function HeaderCom({
   if (page === "send-request") {
     headerLabel = headerText;
   }
+  if (page === "userprofile") {
+    headerLabel = headerText;
+  }
+  if (page === "summary") {
+    headerLabel = headerText;
+  }
 
   const handleClose = (event) => {
     if (

@@ -94,6 +94,10 @@ const usersSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    experience: {
+      type: String,
+      default: "",
+    },
     degree: {
       type: String,
       required: [false, "Please provide degree"],
@@ -130,6 +134,10 @@ const usersSchema = new mongoose.Schema(
       required: false,
     },
     resume: {
+      type: String,
+      default: "", // This will store the file path of the uploaded resume
+    },
+    profilePicture: {
       type: String,
       default: "", // This will store the file path of the uploaded resume
     },

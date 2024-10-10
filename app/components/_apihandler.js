@@ -61,3 +61,25 @@ export const putRequest = async (endpoint, data) => {
   const response = await axios.put(endpoint, data, config);
   return response;
 };
+
+export const putRequestForm = async (endpoint, data, isFormData = false) => {
+  // Get token from localStorage
+  const token = localStorage.getItem("token");
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+
+  // Set up headers
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  // Set Content-Type only if data is not FormData
+  if (!isFormData) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  // Make the PUT request and return the response
+  const response = await axios.put(endpoint, data, { headers });
+  return response; // Directly returning the response data
+};

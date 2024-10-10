@@ -739,7 +739,7 @@ const ProfileManagement = () => {
                 htmlFor="experience"
                 sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
-                Total Experience
+                Total Experience In months
               </InputLabel>
               <OutlinedInput
                 size="small"
@@ -748,7 +748,7 @@ const ProfileManagement = () => {
                 value={formData.experience}
                 onChange={handleChange}
                 fullWidth
-                placeholder="Enter your total experience"
+                placeholder="Total Experience In months"
                 sx={{ color: "black" }}
               />
             </Grid>
