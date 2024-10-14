@@ -586,7 +586,9 @@ export default function UserProfile() {
                     type="file"
                     accept=".pdf"
                     hidden
-                    onChange={(e) => {handleFileChange(e, "resume"), setEditMode(true);}}
+                    onChange={(e) => {
+                      handleFileChange(e, "resume"), setEditMode(true);
+                    }}
                   />
                 </Button>
               </Box>
@@ -642,7 +644,7 @@ export default function UserProfile() {
                 icon={<WorkIcon />}
               />
 
-              {formData.postGradCollege ? (
+              {formData.postGradCollege != "N/A" ? (
                 <ProfileField
                   label="Post Graduate College"
                   value={formData.postGradCollege}
@@ -724,7 +726,9 @@ export default function UserProfile() {
                       type="file"
                       accept=".pdf"
                       hidden
-                      onChange={(e) => {handleFileChange(e, "resume"), setEditMode(true);}}
+                      onChange={(e) => {
+                        handleFileChange(e, "resume"), setEditMode(true);
+                      }}
                     />
                   </Button>
                 </>

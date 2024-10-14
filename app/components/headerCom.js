@@ -429,6 +429,15 @@ export default function HeaderCom({
   if (page === "summary") {
     headerLabel = headerText;
   }
+  if (page === "request-sent") {
+    headerLabel = headerText;
+  }
+  if (page === "requests-received") {
+    headerLabel = headerText;
+  }
+  if (page === "submit-verification") {
+    headerLabel = headerText;
+  }
 
   const handleClose = (event) => {
     if (
@@ -623,7 +632,7 @@ export default function HeaderCom({
                   {user.firstName} {user.lastName}
                 </Typography>
                 <IconButton onClick={handleProfileClick} ref={anchorRef}>
-                  <Avatar alt={user.firstName} src="/profile.jpg" />
+                  <Avatar alt={user.firstName} src={user?.profilePicture} />
                 </IconButton>
                 {/* Profile Menu */}
                 <Popper

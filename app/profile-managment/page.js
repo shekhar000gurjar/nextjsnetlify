@@ -471,7 +471,7 @@
 // export default ProfileManagement;
 
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -484,6 +484,7 @@ import {
   Stack,
   Typography,
   Grid,
+  CircularProgress,
 } from "@mui/material";
 import { degreeOptions, sectorOptions, collegeOptions } from "./constants"; // Import shared data
 import MainLayout from "../layouts/MainLayout";
@@ -1036,4 +1037,14 @@ const ProfileManagement = () => {
   );
 };
 
-export default ProfileManagement;
+// export default ProfileManagement;
+
+
+
+export default function ProfileManagementPage() {
+  return (
+    <Suspense fallback={<Box display="flex" justifyContent="center" mt={4}><CircularProgress /></Box>}>
+      <ProfileManagement />
+    </Suspense>
+  );
+}
