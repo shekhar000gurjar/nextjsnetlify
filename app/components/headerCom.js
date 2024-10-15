@@ -438,6 +438,9 @@ export default function HeaderCom({
   if (page === "submit-verification") {
     headerLabel = headerText;
   }
+  if (page === "buy-credits") {
+    headerLabel = headerText;
+  }
 
   const handleClose = (event) => {
     if (
