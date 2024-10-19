@@ -1,10 +1,10 @@
 // netlify/functions/expireReferralRequests.js
 
 import dbConnect from "../../lib/mongodb";
-import ReferralRequest from "@/models/RefferalRequast";
-import User from "@/models/Users";
-import ReferPointsDetails from "@/models/ReferPointsDetails";
-import PointsTransactionsDetails from "@/models/PointsTransactionsDetails";
+import ReferralRequest from "../../models/RefferalRequast";
+import User from "../../models/Users";
+import ReferPointsDetails from "../../models/ReferPointsDetails";
+import PointsTransactionsDetails from "../../models/PointsTransactionsDetails";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
 
