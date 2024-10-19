@@ -1,6 +1,6 @@
 // netlify/functions/expireReferralRequests.js
 
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "../../lib/mongodb";
 import ReferralRequest from "@/models/RefferalRequast";
 import User from "@/models/Users";
 import ReferPointsDetails from "@/models/ReferPointsDetails";
