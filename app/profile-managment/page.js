@@ -564,8 +564,22 @@ const ProfileManagement = () => {
     if (!formData.currentCompanyName.trim())
       newErrors.currentCompanyName = "Current company name is required";
     if (!formData.position.trim()) newErrors.position = "Position is required";
+    // if (!formData.graduationCollege.trim())
+    //   newErrors.graduationCollege = "Graduation College is required";
     if (!formData.graduationCollege.trim())
       newErrors.graduationCollege = "Graduation College is required";
+    if (
+      formData.graduationCollege === "Others" &&
+      !formData.otherGraduationCollege.trim()
+    )
+      newErrors.otherGraduationCollege = "Please enter your college name";
+    if (!formData.postGradCollege.trim())
+      newErrors.postGradCollege = "Post Grad College is required";
+    if (
+      formData.postGradCollege === "Others" &&
+      !formData.otherPostGradCollege.trim()
+    )
+      newErrors.otherPostGradCollege = "Please enter your college name";
     if (!formData.degree.trim()) newErrors.degree = "Degree is required";
     if (!formData.sector.trim()) newErrors.sector = "Sector is required";
     if (formData.phone_number && !/^\d+$/.test(formData.phone_number))
@@ -591,17 +605,38 @@ const ProfileManagement = () => {
     if (validateForm()) {
       // Creating a FormData object to handle the form fields and file upload
       const formDataToSend = new FormData();
-      Object.keys(formData).forEach((key) => {
-        formDataToSend.append(key, formData[key]);
+
+      // Check if graduationCollege or postGradCollege is 'Others' and set manual input values
+      const graduationCollege =
+        formData.graduationCollege === "Others"
+          ? formData.otherGraduationCollege
+          : formData.graduationCollege;
+
+      const postGradCollege =
+        formData.postGradCollege === "Others"
+          ? formData.otherPostGradCollege
+          : formData.postGradCollege;
+
+      // Update formData with new values
+      const updatedFormData = {
+        ...formData,
+        graduationCollege,
+        postGradCollege,
+      };
+
+      // Append the updated form data to formDataToSend
+      Object.keys(updatedFormData).forEach((key) => {
+        formDataToSend.append(key, updatedFormData[key]);
       });
 
       try {
         // Sending the FormData to the API using postResponse (adjust as per your API)
         const response = await postFormResponse(
-          "/api/add-comapany",
+          "/api/add-comapany", // Corrected the endpoint from "/add-comapany"
           formDataToSend
         );
         console.log(response, "response");
+
         // Check if the response is successful (201 Created)
         if (response.status === 201) {
           getUserDetails();
@@ -644,7 +679,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="currentCompanyName"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Current Company Name
               </InputLabel>
@@ -670,7 +705,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="current_location"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Choose your location
               </InputLabel>
@@ -694,7 +729,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="position"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Select Your Designation
               </InputLabel>
@@ -718,7 +753,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="dob"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Date of Birth
               </InputLabel>
@@ -738,7 +773,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="experience"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Total Experience In months
               </InputLabel>
@@ -758,7 +793,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="graduationCollege"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Graduation College
               </InputLabel>
@@ -803,10 +838,21 @@ const ProfileManagement = () => {
             </Grid>
 
             {/* Graduation Passing Year */}
-            <Grid item xs={12}>
+            {/* {formData.otherGraduationCollege === "" || "N/A"} */}
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display:
+                  formData.graduationCollege === "" ||
+                  formData.graduationCollege === "N/A"
+                    ? "none"
+                    : "block",
+              }}
+            >
               <InputLabel
                 htmlFor="graduationPassingYear"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Graduation Passing Year
               </InputLabel>
@@ -826,7 +872,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="postGradCollege"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Post Graduation College
               </InputLabel>
@@ -864,10 +910,20 @@ const ProfileManagement = () => {
               )}
             </Grid>
             {/* Post Graduation Passing Year */}
-            <Grid item xs={12}>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display:
+                  formData.postGradCollege === "" ||
+                  formData.postGradCollege === "N/A"
+                    ? "none"
+                    : "block",
+              }}
+            >
               <InputLabel
                 htmlFor="postGradPassingYear"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Post Graduation Passing Year
               </InputLabel>
@@ -887,7 +943,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="degree"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Degree
               </InputLabel>
@@ -920,7 +976,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="sector"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Sector
               </InputLabel>
@@ -953,7 +1009,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="phone_number"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Phone Number
               </InputLabel>
@@ -977,7 +1033,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="currentCompanyEmail"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
                 F
               >
                 Official email ID(optional)
@@ -998,7 +1054,7 @@ const ProfileManagement = () => {
             <Grid item xs={12}>
               <InputLabel
                 htmlFor="resume"
-                sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+                // sx={{ display: { xs: "none", sm: "none", md: "block" } }}
               >
                 Upload Resume (PDF only)
               </InputLabel>
@@ -1039,11 +1095,15 @@ const ProfileManagement = () => {
 
 // export default ProfileManagement;
 
-
-
 export default function ProfileManagementPage() {
   return (
-    <Suspense fallback={<Box display="flex" justifyContent="center" mt={4}><CircularProgress /></Box>}>
+    <Suspense
+      fallback={
+        <Box display="flex" justifyContent="center" mt={4}>
+          <CircularProgress />
+        </Box>
+      }
+    >
       <ProfileManagement />
     </Suspense>
   );

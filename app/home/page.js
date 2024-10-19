@@ -737,6 +737,261 @@
 //   );
 // }
 
+// "use client";
+// import {
+//   Box,
+//   Typography,
+//   Container,
+//   Card,
+//   CardMedia,
+//   CardContent,
+//   Grid,
+//   InputBase,
+//   Divider,
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableContainer,
+//   TableRow,
+//   Button,
+// } from "@mui/material";
+// import SearchIcon from "@mui/icons-material/Search";
+// import MainLayout from "../layouts/MainLayout";
+// import { useRouter } from "next/navigation";
+// import { Girl } from "@mui/icons-material";
+// import { useEffect, useState } from "react";
+
+// export default function HomePage() {
+//   const router = useRouter();
+
+//   const [currentUser, setCurrentUser] = useState({});
+
+//   const featuredCompanies = [
+//     {
+//       name: "Google",
+//       sector: "Technology",
+//       image: "/images/google.png", // Replace with actual image path
+//     },
+//     {
+//       name: "Airbnb",
+//       sector: "Hospitality",
+//       image: "/images/hospital.png", // Replace with actual image path
+//     },
+//   ];
+
+//   const handleLoginClick = () => {
+//     router.push("/login");
+//   };
+
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     const user = JSON.parse(localStorage.getItem("user"));
+//     if (token || user) {
+//       setCurrentUser(user);
+//     }
+//   }, [router]);
+
+//   return (
+//     <MainLayout>
+//       <Container maxWidth="lg" sx={{ mt: 4 }}>
+//         <Box
+//           sx={{
+//             paddingLeft: { xs: "20px", sm: "40px", md: "100px" },
+//             paddingRight: { xs: "20px", sm: "40px", md: "100px" },
+//           }}
+//         >
+//           {/* Search Bar */}
+//           <Box
+//             sx={{
+//               display: "flex",
+//               alignItems: "center",
+//               backgroundColor: "#f9fafb", // Lighter grey background for the search bar
+//               padding: "0 16px",
+//               borderRadius: "12px", // Rounded corners for better look
+//               width: "100%",
+//               maxWidth: "700px",
+//               height: "50px",
+//               margin: "0 auto",
+//               mb: 4,
+//               boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)", // Subtle shadow for better feel
+//             }}
+//           >
+//             <SearchIcon sx={{ color: "#6b7280", fontSize: "22px" }} />
+//             <InputBase
+//               placeholder="Search for a job or company..."
+//               sx={{
+//                 ml: 1,
+//                 flex: 1,
+//                 fontSize: { xs: "14px", sm: "16px" }, // Adjust font size for mobile
+//                 color: "#111827", // Dark text color
+//                 fontWeight: 400, // Regular font weight
+//                 input: {
+//                   background: "none",
+//                   outline: "none",
+//                   border: "none",
+//                   width: "100%",
+//                 },
+//               }}
+//             />
+//           </Box>
+
+//           {/* Featured Companies Section */}
+//           <Typography
+//             variant="h5"
+//             sx={{
+//               fontWeight: 700,
+//               fontSize: { xs: "20px", sm: "24px" }, // Responsive font size
+//               color: "#111827",
+//               mb: 3,
+//               textAlign: { xs: "center", sm: "left" }, // Center text on mobile
+//             }}
+//           >
+//             Featured Companies
+//           </Typography>
+//           <Grid container spacing={3}>
+//             {featuredCompanies.map((company, index) => (
+//               <Grid item xs={12} sm={6} md={6} key={index}>
+//                 <Card
+//                   sx={{
+//                     borderRadius: "16px",
+//                     overflow: "hidden",
+//                     height: "100%",
+//                     boxShadow: "none", // No shadow as per image design
+//                   }}
+//                 >
+//                   <CardMedia
+//                     component="img"
+//                     image={company.image}
+//                     alt={company.name}
+//                     sx={{
+//                       height: { xs: "180px", sm: "240px", md: "300px" }, // Responsive image sizes
+//                       width: "100%", // Ensure image takes full width
+//                     }}
+//                   />
+//                   <CardContent>
+//                     <Typography
+//                       variant="subtitle1"
+//                       sx={{
+//                         fontWeight: 600,
+//                         fontSize: "16px",
+//                         color: "#111827",
+//                         mb: 0.5,
+//                       }}
+//                     >
+//                       {company.name}
+//                     </Typography>
+//                     <Typography
+//                       variant="body2"
+//                       sx={{
+//                         fontSize: "14px",
+//                         color: "#6b7280",
+//                         fontWeight: 400,
+//                       }}
+//                     >
+//                       Sector: {company.sector}
+//                     </Typography>
+//                   </CardContent>
+//                 </Card>
+//               </Grid>
+//             ))}
+//           </Grid>
+
+//           {!currentUser && (
+//             <Box sx={{ display: "Grid", alignItems: "center" }}>
+//               <Button
+//                 variant="contained"
+//                 color="primary"
+//                 sx={{
+//                   display: { xs: "block", sm: "none", md: "none", lg: "none" },
+//                   backgroundColor: "#6756f0b8", // Button color as per the image
+//                   borderRadius: "24px", // Rounded button style
+//                   //   padding: "8px 24px",
+//                   textTransform: "none", // Remove uppercase text
+//                   // fontWeight: { lg: "bold" },
+//                   width: "100%",
+//                   marginLeft: "5px",
+//                 }}
+//                 onClick={handleLoginClick}
+//               >
+//                 Sign Up / Log In
+//               </Button>
+//             </Box>
+//           )}
+
+//           {/* How to Use Section */}
+//           <Typography
+//             variant="h6"
+//             sx={{
+//               fontWeight: 700,
+//               fontSize: { xs: "18px", sm: "20px" }, // Responsive font size
+//               color: "#111827",
+//               mt: 5,
+//               mb: 2,
+//             }}
+//           >
+//             How to Use
+//           </Typography>
+
+//           {/* How to Use Table */}
+//           <TableContainer>
+//             <Table>
+//               <TableBody>
+//                 {[
+//                   {
+//                     step: "Step 1: Search for a job or company",
+//                     detail:
+//                       "Use the search bar to find your desired job or company.",
+//                   },
+//                   {
+//                     step: "Step 2: Find a referral",
+//                     detail:
+//                       "Browse through our community to find someone who can refer you.",
+//                   },
+//                   {
+//                     step: "Step 3: Get referred",
+//                     detail:
+//                       "Request a referral and get connected with your referrer.",
+//                   },
+//                 ].map((row, index) => (
+//                   <TableRow
+//                     key={index}
+//                     sx={{
+//                       borderTop: "1px solid #e5e7eb",
+//                       mt: 2,
+//                       paddingTop: 2,
+//                     }}
+//                   >
+//                     <TableCell
+//                       sx={{
+//                         borderBottom: "none",
+//                         fontWeight: 600,
+//                         color: "#111827",
+//                         fontSize: { xs: "14px", sm: "16px" }, // Adjust font size for mobile
+//                       }}
+//                     >
+//                       {row.step}
+//                     </TableCell>
+//                     <TableCell
+//                       sx={{
+//                         borderBottom: "none",
+//                         color: "#6b7280",
+//                         fontSize: { xs: "12px", sm: "14px" }, // Responsive font size
+//                       }}
+//                     >
+//                       {row.detail}
+//                     </TableCell>
+//                   </TableRow>
+//                 ))}
+//               </TableBody>
+//             </Table>
+//           </TableContainer>
+//           <Divider sx={{ mt: 3 }} />
+//         </Box>
+//       </Container>
+//     </MainLayout>
+//   );
+// }
+
 "use client";
 import {
   Box,
@@ -754,14 +1009,26 @@ import {
   TableContainer,
   TableRow,
   Button,
+  List,
+  Paper,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MainLayout from "../layouts/MainLayout";
 import { useRouter } from "next/navigation";
 import { Girl } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { getResponse } from "../components/_apihandler";
+import BusinessIcon from "@mui/icons-material/Business";
 
 export default function HomePage() {
   const router = useRouter();
+
+  const [currentUser, setCurrentUser] = useState({});
+  const [companies, setCompanies] = useState([]); // All companies data
+  const [searchTerm, setSearchTerm] = useState(""); // Search term
+  const [filteredCompanies, setFilteredCompanies] = useState([]); // Filtered companies
 
   const featuredCompanies = [
     {
@@ -780,6 +1047,66 @@ export default function HomePage() {
     router.push("/login");
   };
 
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   if (token || user) {
+  //     setCurrentUser(user);
+  //   }
+  // }, [router]);
+
+  // Fetch companies data from API
+  const allCompanies = async () => {
+    try {
+      const response = await getResponse("/api/allusers");
+      if (response.status === 200 && response.data) {
+        const companyData = response.data.data.map((user) => ({
+          name: user.currentCompanyName || "Unknown",
+          sector: user.sector || "Uncategorized",
+        }));
+        const uniqueCompanies = [
+          ...new Map(companyData.map((item) => [item.name, item])).values(),
+        ]; // Remove duplicates
+        setCompanies(uniqueCompanies);
+        setFilteredCompanies(uniqueCompanies); // Initially, all companies are shown
+      } else {
+        setCompanies([]);
+        setFilteredCompanies([]);
+      }
+    } catch (error) {
+      console.error(error);
+      setCompanies([]);
+      setFilteredCompanies([]);
+    }
+  };
+
+  // Filter companies based on search term
+  const handleSearchChange = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
+    const filtered = companies.filter((company) =>
+      company.name.toLowerCase().includes(value)
+    );
+    setFilteredCompanies(filtered);
+  };
+
+  const handleCompanyClick = (companyName) => {
+    router.push(`/company-page?name=${encodeURIComponent(companyName)}`);
+  };
+
+  useEffect(() => {
+    allCompanies();
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (token || user) {
+      setCurrentUser(user);
+    }
+  }, [router]);
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
   return (
     <MainLayout>
       <Container maxWidth="lg" sx={{ mt: 4 }}>
@@ -790,7 +1117,7 @@ export default function HomePage() {
           }}
         >
           {/* Search Bar */}
-          <Box
+          {/* <Box
             sx={{
               display: "flex",
               alignItems: "center",
@@ -822,7 +1149,116 @@ export default function HomePage() {
                 },
               }}
             />
+          </Box> */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "#f9fafb", // Lighter grey background for the search bar
+              padding: "0 16px",
+              borderRadius: "12px", // Rounded corners for better look
+              width: "100%",
+              maxWidth: "700px",
+              height: "50px",
+              margin: "0 auto",
+              mb: 4,
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)", // Subtle shadow for better feel
+            }}
+          >
+            <SearchIcon sx={{ color: "#6b7280", fontSize: "22px" }} />
+            <InputBase
+              placeholder="Search for a job or company..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              sx={{
+                ml: 1,
+                flex: 1,
+                fontSize: { xs: "14px", sm: "16px" }, // Adjust font size for mobile
+                color: "#111827", // Dark text color
+                fontWeight: 400, // Regular font weight
+                input: {
+                  background: "none",
+                  outline: "none",
+                  border: "none",
+                  width: "100%",
+                },
+              }}
+            />
           </Box>
+
+          {/* Filtered Company List */}
+          {/* {searchTerm && filteredCompanies.length > 0 && (
+            <Paper
+              sx={{
+                maxWidth: "700px",
+                margin: "0 auto",
+                mb: 4,
+                borderRadius: "12px",
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <List>
+                {filteredCompanies.map((company, index) => (
+                  <ListItem
+                    key={index}
+                    button
+                    onClick={() => handleCompanyClick(company.name)}
+                  >
+                    <ListItemText primary={company.name} />
+                  </ListItem>
+                ))}
+              </List>
+            </Paper>
+          )} */}
+          {searchTerm && filteredCompanies.length > 0 && (
+            <Paper
+              sx={{
+                maxWidth: "700px",
+                margin: "0 auto",
+                mb: 4,
+                borderRadius: "12px",
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <List>
+                {filteredCompanies.map((company, index) => (
+                  <ListItem
+                    key={index}
+                    button
+                    onClick={() => handleCompanyClick(company.name)}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 2, // Adds space between icon and text
+                      padding: "12px 16px", // Adjusts padding for a clean layout
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        backgroundColor: "#f1f1f1",
+                        padding: "8px",
+                        borderRadius: "8px",
+                        color: "#757575",
+                      }}
+                    >
+                      <BusinessIcon />
+                    </Box>
+                    <Box>
+                      <Typography
+                        variant="body1"
+                        sx={{ fontWeight: "bold", color: "#333" }}
+                      >
+                        {capitalizeFirstLetter(company.name)}
+                      </Typography>
+                      <Typography variant="caption" sx={{ color: "#666" }}>
+                        {company.sector}
+                      </Typography>
+                    </Box>
+                  </ListItem>
+                ))}
+              </List>
+            </Paper>
+          )}
 
           {/* Featured Companies Section */}
           <Typography
@@ -884,26 +1320,28 @@ export default function HomePage() {
               </Grid>
             ))}
           </Grid>
-          <Box sx={{ display: "Grid", alignItems: "center" }}>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{
-                display: { xs: "block", sm: "none", md: "none", lg: "none" },
-                backgroundColor: "#6756f0b8", // Button color as per the image
-                borderRadius: "24px", // Rounded button style
-                //   padding: "8px 24px",
-                textTransform: "none", // Remove uppercase text
-                // fontWeight: { lg: "bold" },
-                width: "100%",
-                marginLeft: "5px",
-              }}
-              onClick={handleLoginClick}
-            >
-              Sign Up / Log In
-            </Button>
-          </Box>
-          
+
+          {!currentUser && (
+            <Box sx={{ display: "Grid", alignItems: "center" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  display: { xs: "block", sm: "none", md: "none", lg: "none" },
+                  backgroundColor: "#6756f0b8", // Button color as per the image
+                  borderRadius: "24px", // Rounded button style
+                  //   padding: "8px 24px",
+                  textTransform: "none", // Remove uppercase text
+                  // fontWeight: { lg: "bold" },
+                  width: "100%",
+                  marginLeft: "5px",
+                }}
+                onClick={handleLoginClick}
+              >
+                Sign Up / Log In
+              </Button>
+            </Box>
+          )}
 
           {/* How to Use Section */}
           <Typography

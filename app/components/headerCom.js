@@ -397,10 +397,17 @@ export default function HeaderCom({
 
   const menuItems = [
     { name: "Home", path: "/" },
+    { name: "Companies", path: "/search-company" },
     { name: "About", path: "/about" },
-    { name: "Services", path: "/services" },
     { name: "Contact", path: "/contact" },
   ];
+
+  // const mobileMenuItems = [
+  //   { name: "Profile", path: "/" },
+  //   { name: "Companies", path: "/search-company" },
+  //   { name: "About", path: "/about" },
+  //   { name: "Contact", path: "/contact" },
+  // ];
 
   const profileMenuItems = [
     { name: "Profile", path: "/userprofile" },
@@ -721,7 +728,7 @@ export default function HeaderCom({
               open={drawerOpenRight}
               onClose={handleDrawerToggleRight}
             >
-              <List>
+              {/* <List>
                 {menuItems.map((item) => (
                   <ListItem
                     button
@@ -729,6 +736,38 @@ export default function HeaderCom({
                     onClick={() => router.push(item.path)}
                   >
                     <ListItemText primary={item.name} />
+                  </ListItem>
+                ))}
+              </List> */}
+              <List>
+                {menuItems.map((item) => (
+                  <ListItem
+                    button
+                    key={item.name}
+                    onClick={() => router.push(item.path)}
+                  >
+                    <ListItemText
+                      primary={
+                        <Typography style={{ color: "black" }}>
+                          {item.name}
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                ))}
+                {profileMenuItems.map((item) => (
+                  <ListItem
+                    button
+                    key={item.name}
+                    onClick={() => router.push(item.path)}
+                  >
+                    <ListItemText
+                      primary={
+                        <Typography style={{ color: "black" }}>
+                          {item.name}
+                        </Typography>
+                      }
+                    />
                   </ListItem>
                 ))}
               </List>

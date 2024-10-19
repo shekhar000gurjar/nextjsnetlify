@@ -443,32 +443,387 @@
 
 // export default ReferralReceivedPage;
 
+// "use client";
+// import React, { useEffect, useState } from "react";
+// import {
+//   Box,
+//   Typography,
+//   Button,
+//   List,
+//   ListItem,
+//   ListItemText,
+//   ButtonGroup,
+//   Grid,
+//   Stack,
+//   Avatar,
+// } from "@mui/material";
+// import { useRouter } from "next/navigation";
+// import { notify } from "../components/Toast";
+// import { getResponse, postResponse } from "../components/_apihandler";
+// import dayjs from "dayjs"; // Import dayjs for date manipulation
+// import MainLayout from "../layouts/MainLayout";
+// import Loading from "../components/Loading";
+// import { userDetails } from "@/middleware/userDetails";
+
+// const ReferralReceivedPage = () => {
+//   const router = useRouter();
+//   const [userData, setUserData] = useState({});
+//   const [receivedRequests, setReceivedRequests] = useState([]);
+
+//   const getUserDetails = async () => {
+//     const response = await userDetails();
+//     if (response.status === 200) {
+//       localStorage.setItem("user", JSON.stringify(response.data.data));
+//       setUserData(response.data.data);
+//     }
+//   };
+
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     const user = JSON.parse(localStorage.getItem("user"));
+//     if (!token || !user) {
+//       notify("Please log in first!", "error");
+//       router.push("/login");
+//     } else {
+//       getUserDetails();
+//     }
+//   }, [router]);
+
+//   useEffect(() => {
+//     if (userData._id) {
+//       fetchReceivedRequests();
+//     }
+//   }, [userData._id]);
+
+//   const fetchReceivedRequests = async () => {
+//     try {
+//       const response = await getResponse(
+//         `/api/requests/getRequests?userId=${userData._id}&type=receiver`
+//       );
+//       if (response.status === 200) {
+//         setReceivedRequests(response.data.data);
+//       } else {
+//         notify("Something went wrong!", "error");
+//       }
+//     } catch (error) {
+//       if (error.response && error.response.status === 400) {
+//         notify(error.response.data.msg, "error");
+//       }
+//     }
+//   };
+
+//   // const getStatusMessage = (status, expireOn) => {
+//   //   const now = dayjs();
+//   //   const expireTime = dayjs(expireOn);
+//   //   const hoursLeft = expireTime.diff(now, "hour");
+//   //   switch (status) {
+//   //     case "Send":
+//   //       return "Waiting For Confirmation";
+//   //     case "Rejected":
+//   //       return "Rejected";
+//   //     case "Accepted":
+//   //       return `Accepted - ${hoursLeft} hours left to submit submission proof.`;
+//   //     case "Successful":
+//   //       return "Successful";
+//   //     case "Expired":
+//   //       return "Expired";
+//   //     case "Canceled":
+//   //       return "Rejected";
+//   //     default:
+//   //       return "";
+//   //   }
+//   // };
+
+//   const getStatusMessage = (status, createdAt) => {
+//     const now = dayjs(); // Current time
+//     const createdTime = dayjs(createdAt); // Request creation time
+//     const expireTime = createdTime.add(72, "hour"); // Expiry time (72 hours from creation)
+//     const hoursLeft = expireTime.diff(now, "hour"); // Calculate hours left until expiration
+
+//     switch (status) {
+//       case "Send":
+//         return `Waiting For Confirmation - ${hoursLeft} hours left to accept.`;
+//       case "Rejected":
+//         return "Rejected";
+//       case "Accepted":
+//         return `Accepted - ${hoursLeft} hours left to submit submission proof.`;
+//       case "Successful":
+//         return "Successful";
+//       case "Expired":
+//         return "Expired";
+//       case "Canceled":
+//         return "Rejected";
+//       default:
+//         return "";
+//     }
+//   };
+
+//   const handleAccept = async (requestId) => {
+//     try {
+//       const response = await postResponse(`/api/requests/acceptRequest`, {
+//         requestId: requestId,
+//       });
+//       if (response.status === 200) {
+//         notify(response.data.msg);
+//         fetchReceivedRequests();
+//         getUserDetails();
+//       } else {
+//         notify("Something went wrong!", "error");
+//       }
+//     } catch (error) {
+//       if (error.response && error.response.status === 400) {
+//         notify(error.response.data.msg, "error");
+//       }
+//     }
+//   };
+
+//   const handleReject = async (requestId) => {
+//     try {
+//       const response = await postResponse(`/api/requests/rejectRequest`, {
+//         requestId: requestId,
+//       });
+//       if (response.status === 200) {
+//         notify(response.data.msg);
+//         fetchReceivedRequests();
+//       } else {
+//         notify("Something went wrong!", "error");
+//       }
+//     } catch (error) {
+//       if (error.response && error.response.status === 400) {
+//         notify(error.response.data.msg, "error");
+//       }
+//     }
+//   };
+
+//   const handleSubmitValidation = async (requestId) => {
+//     router.push(`/submit-verification?requestId=${requestId}`);
+//   };
+
+//   return (
+//     <>
+//       <Loading />
+//       <MainLayout
+//         homeIcon={true}
+//         headerText={"Request Received"}
+//         homeIconSide={"left"}
+//         page={"requests-received"}
+//       >
+//         <Box
+//           className="reBg"
+//           pb={10}
+//           display="flex"
+//           flexDirection="column"
+//           alignItems="center"
+//           justifyContent="center"
+//         >
+//           {/* Profile Section */}
+//           <Box textAlign="center" py={4} width="100%" sx={{ color: "black" }}>
+//             <Stack
+//               spacing={2}
+//               alignItems="center"
+//               sx={{ color: "black", textAlign: "center" }}
+//             >
+//               <Avatar
+//                 src={userData.profilePicture}
+//                 sx={{ width: 120, height: 120 }}
+//               />
+//             </Stack>
+//             <Typography
+//               variant="h4"
+//               component="h2"
+//               sx={{
+//                 fontWeight: "600",
+//                 color: "black",
+//               }}
+//             >{`${userData.first_name} ${userData.last_name}`}</Typography>
+//             <Typography
+//               variant="body1"
+//               color="textSecondary"
+//               sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+//             >
+//               Refer Points Balance: {userData.total_refer_points || 0}
+//             </Typography>
+//           </Box>
+
+//           <Box
+//             sx={{
+//               display: { md: "none" },
+//               border: "1px solid black",
+//               padding: "40px",
+//               width: "90%",
+//               marginBottom: "10px",
+//               borderRadius: "15px",
+//             }}
+//           >
+//             <Typography variant="body1" color="textSecondary">
+//               Refer Points Balance: {userData.total_refer_points || 0}
+//             </Typography>
+//           </Box>
+//           {/* Request List */}
+//           <Box
+//             maxWidth={900}
+//             width="100%"
+//             mb={4}
+//             sx={{
+//               "@media (max-width: 600px)": {
+//                 mb: 2,
+//                 padding: 2,
+//               },
+//             }}
+//           >
+//             <Grid container spacing={3}>
+//               {receivedRequests.map((request) => (
+//                 <Grid item xs={12} md={12} key={request._id}>
+//                   <Box
+//                     p={2}
+//                     boxShadow={3}
+//                     display="flex"
+//                     justifyContent="space-between"
+//                     alignItems="center"
+//                     borderRadius={2}
+//                     bgcolor="#f9f9f9"
+//                     sx={{
+//                       "@media (max-width: 600px)": {
+//                         flexDirection: "column",
+//                         gap: 2,
+//                       },
+//                     }}
+//                   >
+//                     <Box>
+//                       <Typography variant="body1" fontWeight="bold">
+//                         {`User ${request.sender_id.first_name}`}
+//                       </Typography>
+//                       <Typography variant="body2" color="textSecondary">
+//                         {`Sent request for ${request.vacancy_name}`}
+//                       </Typography>
+//                     </Box>
+//                     <Box>
+//                       <Typography variant="caption" color="textSecondary">
+//                         {getStatusMessage(request.status, request.expireOn)}
+//                       </Typography>
+//                     </Box>
+//                     <Box
+//                       sx={{
+//                         display: "flex",
+//                         gap: 2,
+//                         "@media (max-width: 600px)": {
+//                           justifyContent: "center",
+//                         },
+//                       }}
+//                     >
+//                       {request.status === "Send" && (
+//                         // <ButtonGroup variant="contained">
+//                         <>
+//                           <Button
+//                             // color="primary"
+//                             onClick={() => handleAccept(request._id)}
+//                             sx={{
+//                               color: "white",
+//                               backgroundColor: "#1170c0",
+//                               borderRadius: "15px",
+//                               padding: "6px 16px",
+//                               // textTransform: "none",
+//                               // fontWeight: "bold",
+//                               "&:hover": {
+//                                 backgroundColor: "#1170c0", // Keeps the same background color on hover
+//                               },
+//                               "&:active": {
+//                                 backgroundColor: "#1170c0", // Keeps the same background color when clicked
+//                               },
+//                             }}
+//                           >
+//                             Accept
+//                           </Button>
+//                           <Button
+//                             variant="contained"
+//                             sx={{
+//                               color: "black",
+//                               backgroundColor: "#e5e7eb",
+//                               // textTransform: "none",
+//                               borderRadius: "15px",
+//                               "&:hover": {
+//                                 backgroundColor: "#e5e7eb", // Keeps the same background color on hover
+//                               },
+//                               "&:active": {
+//                                 backgroundColor: "#e5e7eb", // Keeps the same background color when clicked
+//                               },
+//                             }}
+//                             onClick={() => handleReject(request._id)}
+//                           >
+//                             Reject
+//                           </Button>
+//                         </>
+//                         // </ButtonGroup>
+//                       )}
+//                       {request.status === "Accepted" && (
+//                         <Button
+//                           variant="contained"
+//                           color="primary"
+//                           sx={{
+//                             bgcolor: "green",
+//                           }}
+//                           // disabled
+//                           onClick={() => handleSubmitValidation(request._id)}
+//                         >
+//                           Submit Verification
+//                         </Button>
+//                       )}
+//                       {request.status === "Rejected" && (
+//                         <Button
+//                           variant="contained"
+//                           sx={{
+//                             color: "white",
+//                             backgroundColor: "red",
+//                             textTransform: "none",
+//                             borderRadius: "15px",
+//                             "&.Mui-disabled": {
+//                               color: "white",
+//                               backgroundColor: "red", // Ensures red background stays when disabled
+//                               opacity: 0.7, // Optionally adjust the opacity if needed
+//                             },
+//                           }}
+//                           disabled
+//                         >
+//                           Rejected
+//                         </Button>
+//                       )}
+//                     </Box>
+//                   </Box>
+//                 </Grid>
+//               ))}
+//             </Grid>
+//           </Box>
+//         </Box>
+//       </MainLayout>
+//     </>
+//   );
+// };
+
+// export default ReferralReceivedPage;
+
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  ButtonGroup,
-  Grid,
-  Stack,
-  Avatar,
-} from "@mui/material";
+import { Box, Typography, Button, Grid, Stack, Avatar } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { notify } from "../components/Toast";
 import { getResponse, postResponse } from "../components/_apihandler";
 import dayjs from "dayjs"; // Import dayjs for date manipulation
+import duration from "dayjs/plugin/duration";
 import MainLayout from "../layouts/MainLayout";
 import Loading from "../components/Loading";
 import { userDetails } from "@/middleware/userDetails";
+
+// Extend dayjs with duration plugin
+dayjs.extend(duration);
 
 const ReferralReceivedPage = () => {
   const router = useRouter();
   const [userData, setUserData] = useState({});
   const [receivedRequests, setReceivedRequests] = useState([]);
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
 
   const getUserDetails = async () => {
     const response = await userDetails();
@@ -512,17 +867,62 @@ const ReferralReceivedPage = () => {
     }
   };
 
-  const getStatusMessage = (status, expireOn) => {
+  const calculateRemainingTime = (createdAt) => {
+    const expireTime = dayjs(createdAt).add(72, "hour");
     const now = dayjs();
-    const expireTime = dayjs(expireOn);
-    const hoursLeft = expireTime.diff(now, "hour");
+    const remainingDuration = dayjs.duration(expireTime.diff(now));
+
+    const days = remainingDuration.days();
+    const hours = remainingDuration.hours();
+    const minutes = remainingDuration.minutes();
+    const seconds = remainingDuration.seconds();
+
+    if (expireTime.isBefore(now)) {
+      return {
+        expired: true,
+        time: "Expired",
+      };
+    } else {
+      return {
+        expired: false,
+        time: { days, hours, minutes, seconds },
+      };
+    }
+  };
+
+  const [timers, setTimers] = useState({});
+
+  // This function will update timers every second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const updatedTimers = receivedRequests.reduce((acc, request) => {
+        acc[request._id] = calculateRemainingTime(request.createdAt);
+        return acc;
+      }, {});
+      setTimers(updatedTimers);
+    }, 1000); // Update every second
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, [receivedRequests]);
+
+  const getStatusMessage = (status, createdAt, requestId) => {
+    const { expired, time } =
+      timers[requestId] || calculateRemainingTime(createdAt);
+
+    if (expired) {
+      return "Expired";
+    }
+
+    const { days, hours, minutes, seconds } = time;
+    const timeString = `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
+
     switch (status) {
       case "Send":
-        return "Waiting For Confirmation";
+        return `Waiting For Confirmation - ${timeString} left to accept.`;
       case "Rejected":
         return "Rejected";
       case "Accepted":
-        return `Accepted - ${hoursLeft} hours left to submit submission proof.`;
+        return `Accepted - ${timeString} left to submit submission proof.`;
       case "Successful":
         return "Successful";
       case "Expired":
@@ -635,6 +1035,7 @@ const ReferralReceivedPage = () => {
               Refer Points Balance: {userData.total_refer_points || 0}
             </Typography>
           </Box>
+
           {/* Request List */}
           <Box
             maxWidth={900}
@@ -675,7 +1076,11 @@ const ReferralReceivedPage = () => {
                     </Box>
                     <Box>
                       <Typography variant="caption" color="textSecondary">
-                        {getStatusMessage(request.status, request.expireOn)}
+                        {getStatusMessage(
+                          request.status,
+                          request.createdAt,
+                          request._id
+                        )}
                       </Typography>
                     </Box>
                     <Box
@@ -688,23 +1093,19 @@ const ReferralReceivedPage = () => {
                       }}
                     >
                       {request.status === "Send" && (
-                        // <ButtonGroup variant="contained">
                         <>
                           <Button
-                            // color="primary"
                             onClick={() => handleAccept(request._id)}
                             sx={{
                               color: "white",
                               backgroundColor: "#1170c0",
                               borderRadius: "15px",
                               padding: "6px 16px",
-                              // textTransform: "none",
-                              // fontWeight: "bold",
                               "&:hover": {
-                                backgroundColor: "#1170c0", // Keeps the same background color on hover
+                                backgroundColor: "#1170c0",
                               },
                               "&:active": {
-                                backgroundColor: "#1170c0", // Keeps the same background color when clicked
+                                backgroundColor: "#1170c0",
                               },
                             }}
                           >
@@ -715,13 +1116,12 @@ const ReferralReceivedPage = () => {
                             sx={{
                               color: "black",
                               backgroundColor: "#e5e7eb",
-                              // textTransform: "none",
                               borderRadius: "15px",
                               "&:hover": {
-                                backgroundColor: "#e5e7eb", // Keeps the same background color on hover
+                                backgroundColor: "#e5e7eb",
                               },
                               "&:active": {
-                                backgroundColor: "#e5e7eb", // Keeps the same background color when clicked
+                                backgroundColor: "#e5e7eb",
                               },
                             }}
                             onClick={() => handleReject(request._id)}
@@ -729,7 +1129,6 @@ const ReferralReceivedPage = () => {
                             Reject
                           </Button>
                         </>
-                        // </ButtonGroup>
                       )}
                       {request.status === "Accepted" && (
                         <Button
@@ -738,7 +1137,6 @@ const ReferralReceivedPage = () => {
                           sx={{
                             bgcolor: "green",
                           }}
-                          // disabled
                           onClick={() => handleSubmitValidation(request._id)}
                         >
                           Submit Verification
@@ -754,8 +1152,8 @@ const ReferralReceivedPage = () => {
                             borderRadius: "15px",
                             "&.Mui-disabled": {
                               color: "white",
-                              backgroundColor: "red", // Ensures red background stays when disabled
-                              opacity: 0.7, // Optionally adjust the opacity if needed
+                              backgroundColor: "red",
+                              opacity: 0.7,
                             },
                           }}
                           disabled

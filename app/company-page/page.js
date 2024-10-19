@@ -630,7 +630,7 @@ function CompanyPageComponent() {
                     >
                       <Avatar
                         alt={user.first_name}
-                        src={user.profile_picture_url}
+                        src={user.profilePicture}
                         sx={{ width: 60, height: 60, marginRight: "15px" }}
                       />
                       <Box flexGrow={1}>
@@ -638,7 +638,7 @@ function CompanyPageComponent() {
                           {user.first_name} {user.last_name}
                         </Typography>
                         <Typography variant="body2">
-                          Sector - {user.sector}Total Successfull Referrals -{" "}
+                          Sector - {user.sector} Total Successfull Referrals -{" "}
                           {user && user?.referrals ? user?.referrals : " "}
                           Joined {calculateTimeAgo(user.createdAt)}
                         </Typography>

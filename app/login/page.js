@@ -512,7 +512,7 @@ export default function Login() {
                 textAlign="center"
                 variant="h5"
                 // color="text.secondary"
-                sx={{ color: "black" }}
+                sx={{ color: "black", fontWeight: "bold" }}
                 mb={3}
               >
                 Helping people apply for jobs through referrals
@@ -625,6 +625,7 @@ export default function Login() {
                   justifyContent="space-between"
                   alignItems="center"
                   mt={2}
+                  gap={{ xs: "19px" }}
                 >
                   <Button
                     variant="contained"

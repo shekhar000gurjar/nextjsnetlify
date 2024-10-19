@@ -340,9 +340,9 @@
 //     router.push("/home");
 //   };
 
-//   const capitalizeFirstLetter = (string) => {
-//     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-//   };
+// const capitalizeFirstLetter = (string) => {
+//   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+// };
 
 //   return (
 //     <MainLayout
@@ -1015,6 +1015,10 @@ const SearchPage = () => {
     return matchesSearch && matchesSector;
   });
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
   return (
     <MainLayout
       homeIcon={true}
@@ -1144,19 +1148,19 @@ const SearchPage = () => {
                             backgroundColor: "#f1f1f1",
                             padding: "8px",
                             borderRadius: "8px",
-                            color:'#757575'
+                            color: "#757575",
                           }}
                         >
                           {/* {sectorIcons[company.sector] ||
                             sectorIcons.Uncategorized} */}
-                            <BusinessIcon />
+                          <BusinessIcon />
                         </Box>
                         <Box>
                           <Typography
                             variant="body1"
                             sx={{ fontWeight: "bold", color: "#333" }}
                           >
-                            {company.name}
+                            {capitalizeFirstLetter(company.name)}
                           </Typography>
                           <Typography variant="caption" sx={{ color: "#666" }}>
                             {company.sector}

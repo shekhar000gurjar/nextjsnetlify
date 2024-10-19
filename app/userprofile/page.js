@@ -432,14 +432,14 @@ export default function UserProfile() {
         setFormData({
           first_name: userData.first_name,
           last_name: userData.last_name,
-          currentCompanyName: userData.currentCompanyName,
-          upi_id: userData.upi_id,
-          sector: userData.sector,
-          position: userData.position,
-          experience: userData.experience,
-          graduationCollege: userData.graduationCollege,
-          postGradCollege: userData.postGradCollege,
-          degree: userData.degree,
+          currentCompanyName: userData.currentCompanyName || "N/A",
+          upi_id: userData.upi_id || "N/A",
+          sector: userData.sector || "N/A",
+          position: userData.position || "N/A",
+          experience: userData.experience || "N/A",
+          graduationCollege: userData.graduationCollege || "N/A",
+          postGradCollege: userData.postGradCollege || "N/A",
+          degree: userData.degree || "N/A",
           // resumename: userData.resume,
         });
       }
@@ -504,9 +504,9 @@ export default function UserProfile() {
     }
   };
 
-  if (pageLoading) {
-    return <CircularProgress />;
-  }
+  // if (pageLoading) {
+  //   return <CircularProgress />;
+  // }
 
   return (
     <MainLayout
@@ -515,206 +515,76 @@ export default function UserProfile() {
       homeIconSide={"left"}
       page={"userprofile"}
     >
-      <Box pt={2} display="flex" justifyContent="center">
-        <Container maxWidth="md">
-          <Paper
-            elevation={3}
-            sx={{
-              borderRadius: "15px",
-              mx: "auto",
-              px: { xs: 2, sm: 4 },
-              py: 4,
-            }}
-          >
-            {/* Profile Picture Section */}
-            <Stack
-              spacing={2}
-              alignItems="center"
-              sx={{ color: "black", textAlign: "center" }}
+      {pageLoading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="100vh"
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Box pt={2} display="flex" justifyContent="center">
+          <Container maxWidth="md">
+            <Paper
+              elevation={3}
+              sx={{
+                borderRadius: "15px",
+                mx: "auto",
+                px: { xs: 2, sm: 4 },
+                py: 4,
+              }}
             >
-              <Avatar
-                src={
-                  profilePicture
-                    ? URL.createObjectURL(profilePicture)
-                    : user.profilePicture
-                }
-                sx={{ width: 120, height: 120 }}
-              />
-              <Typography>{`${user.first_name} ${user.last_name}`}</Typography>
-              <Typography>{user.currentCompanyName}</Typography>
-              <Box sx={{ display: "flex", gap: 3 }}>
-                <Button
-                  variant="outlined"
-                  component="label"
-                  sx={{
-                    textTransform: "none",
-                    backgroundColor: "#617AFB",
-                    color: "white",
-                    borderRadius: "18px",
-                    "&:hover": {
-                      backgroundColor: "#617AFB", // Keeps the same background color on hover
-                    },
-                    "&:active": {
-                      backgroundColor: "#617AFB", // Keeps the same background color when clicked
-                    },
-                  }}
-                >
-                  Edit Picture
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    hidden
-                    onChange={(e) => {
-                      handleFileChange(e, "profilePicture");
-                      setEditMode(true);
-                    }}
-                  />
-                </Button>
-                <Button
-                  variant="outlined"
-                  component="label"
-                  sx={{
-                    display: { xs: "flex", sm: "flex", md: "none" },
-                    textTransform: "none",
-                    backgroundColor: "#EEEFF1",
-                    color: "black",
-                    borderRadius: "18px",
-                  }}
-                >
-                  Upload Resume
-                  <Input
-                    type="file"
-                    accept=".pdf"
-                    hidden
-                    onChange={(e) => {
-                      handleFileChange(e, "resume"), setEditMode(true);
-                    }}
-                  />
-                </Button>
-              </Box>
-            </Stack>
-
-            {/* Profile Overview Section */}
-            <Stack mt={4} spacing={2}>
-              <Typography
-                variant="h5"
-                fontWeight="600"
-                textAlign="start"
-                sx={{ color: "black" }}
+              {/* Profile Picture Section */}
+              <Stack
+                spacing={2}
+                alignItems="center"
+                sx={{ color: "black", textAlign: "center" }}
               >
-                Profile Overview
-              </Typography>
-
-              <ProfileField
-                label="Company"
-                value={formData.currentCompanyName}
-                onChange={(e) =>
-                  handleInputChange("currentCompanyName", e.target.value)
-                }
-                editMode={editMode}
-                icon={<BusinessIcon />}
-              />
-              <ProfileField
-                label="UPI ID"
-                value={formData.upi_id}
-                onChange={(e) => handleInputChange("upi_id", e.target.value)}
-                editMode={editMode}
-                icon={<PaymentIcon />}
-              />
-              <ProfileField
-                label="Job Sector"
-                value={formData.sector}
-                onChange={(e) => handleInputChange("sector", e.target.value)}
-                editMode={editMode}
-                icon={<WorkIcon />}
-              />
-              <ProfileField
-                label="Position"
-                value={formData.position}
-                editMode={false}
-                icon={<WorkIcon />}
-              />
-              <ProfileField
-                label="Total Experience"
-                value={formData.experience}
-                onChange={(e) =>
-                  handleInputChange("experience", e.target.value)
-                }
-                editMode={editMode}
-                icon={<WorkIcon />}
-              />
-
-              {formData.postGradCollege != "N/A" ? (
-                <ProfileField
-                  label="Post Graduate College"
-                  value={formData.postGradCollege}
-                  editMode={false}
-                  icon={<SchoolIcon />}
+                <Avatar
+                  src={
+                    profilePicture
+                      ? URL.createObjectURL(profilePicture)
+                      : user.profilePicture
+                  }
+                  sx={{ width: 120, height: 120 }}
                 />
-              ) : (
-                <ProfileField
-                  label="Graduation College"
-                  value={formData.graduationCollege}
-                  editMode={false}
-                  icon={<SchoolIcon />}
-                />
-              )}
-              <ProfileField
-                label="Degree"
-                value={formData.degree}
-                editMode={false}
-                icon={<SchoolIcon />}
-              />
-            </Stack>
-
-            {/* Action Buttons Section */}
-            <Stack mt={4} direction="row" spacing={2} justifyContent="center">
-              {editMode ? (
-                <>
-                  <LoadingButton
-                    loading={loading}
-                    variant="contained"
-                    onClick={handleUpdateDetails}
-                    sx={{
-                      backgroundColor: "#617AFB",
-                      color: "white",
-                      borderRadius: "18px",
-                    }}
-                  >
-                    Save
-                  </LoadingButton>
+                <Typography>{`${user.first_name} ${user.last_name}`}</Typography>
+                <Typography>{user.currentCompanyName}</Typography>
+                <Box sx={{ display: "flex", gap: 3 }}>
                   <Button
                     variant="outlined"
-                    onClick={() => setEditMode(false)}
-                    sx={{
-                      backgroundColor: "#617AFB",
-                      color: "white",
-                      borderRadius: "18px",
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    variant="contained"
-                    onClick={() => setEditMode(true)}
+                    component="label"
                     sx={{
                       textTransform: "none",
                       backgroundColor: "#617AFB",
                       color: "white",
                       borderRadius: "18px",
+                      "&:hover": {
+                        backgroundColor: "#617AFB", // Keeps the same background color on hover
+                      },
+                      "&:active": {
+                        backgroundColor: "#617AFB", // Keeps the same background color when clicked
+                      },
                     }}
                   >
-                    Edit Profile Details
+                    Edit Picture
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      onChange={(e) => {
+                        handleFileChange(e, "profilePicture");
+                        setEditMode(true);
+                      }}
+                    />
                   </Button>
                   <Button
                     variant="outlined"
                     component="label"
-                    startIcon={<InsertDriveFileIcon />}
                     sx={{
-                      display: { md: "flex" },
+                      display: { xs: "flex", sm: "flex", md: "none" },
                       textTransform: "none",
                       backgroundColor: "#EEEFF1",
                       color: "black",
@@ -731,12 +601,157 @@ export default function UserProfile() {
                       }}
                     />
                   </Button>
-                </>
-              )}
-            </Stack>
-          </Paper>
-        </Container>
-      </Box>
+                </Box>
+              </Stack>
+
+              {/* Profile Overview Section */}
+              <Stack mt={4} spacing={2}>
+                <Typography
+                  variant="h5"
+                  fontWeight="600"
+                  textAlign="start"
+                  sx={{ color: "black" }}
+                >
+                  Profile Overview
+                </Typography>
+
+                <ProfileField
+                  label="Company"
+                  value={formData.currentCompanyName}
+                  onChange={(e) =>
+                    handleInputChange("currentCompanyName", e.target.value)
+                  }
+                  editMode={editMode}
+                  icon={<BusinessIcon />}
+                />
+                <ProfileField
+                  label="UPI ID"
+                  value={formData.upi_id}
+                  onChange={(e) => handleInputChange("upi_id", e.target.value)}
+                  editMode={editMode}
+                  icon={<PaymentIcon />}
+                />
+                <ProfileField
+                  label="Job Sector"
+                  value={formData.sector}
+                  onChange={(e) => handleInputChange("sector", e.target.value)}
+                  editMode={editMode}
+                  icon={<WorkIcon />}
+                />
+                <ProfileField
+                  label="Position"
+                  value={formData.position}
+                  onChange={(e) =>
+                    handleInputChange("position", e.target.value)
+                  }
+                  editMode={editMode}
+                  icon={<WorkIcon />}
+                />
+                <ProfileField
+                  label="Total Experience"
+                  value={`${formData.experience} months`}
+                  onChange={(e) =>
+                    handleInputChange("experience", e.target.value)
+                  }
+                  editMode={editMode}
+                  icon={<WorkIcon />}
+                />
+
+                {/* {formData.postGradCollege != "N/A" ||
+              formData.postGradCollege != "" ? ( */}
+                <ProfileField
+                  label="Post Graduate College"
+                  value={formData.postGradCollege || "N/A"}
+                  editMode={false}
+                  icon={<SchoolIcon />}
+                />
+                {/* ) : ( */}
+                <ProfileField
+                  label="Graduation College"
+                  value={formData.graduationCollege || "N/A"}
+                  editMode={false}
+                  icon={<SchoolIcon />}
+                />
+                {/* )} */}
+                <ProfileField
+                  label="Degree"
+                  value={formData.degree}
+                  editMode={false}
+                  icon={<SchoolIcon />}
+                />
+              </Stack>
+
+              {/* Action Buttons Section */}
+              <Stack mt={4} direction="row" spacing={2} justifyContent="center">
+                {editMode ? (
+                  <>
+                    <LoadingButton
+                      loading={loading}
+                      variant="contained"
+                      onClick={handleUpdateDetails}
+                      sx={{
+                        backgroundColor: "#617AFB",
+                        color: "white",
+                        borderRadius: "18px",
+                      }}
+                    >
+                      Save
+                    </LoadingButton>
+                    <Button
+                      variant="outlined"
+                      onClick={() => setEditMode(false)}
+                      sx={{
+                        backgroundColor: "#617AFB",
+                        color: "white",
+                        borderRadius: "18px",
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      variant="contained"
+                      onClick={() => setEditMode(true)}
+                      sx={{
+                        textTransform: "none",
+                        backgroundColor: "#617AFB",
+                        color: "white",
+                        borderRadius: "18px",
+                      }}
+                    >
+                      Edit Profile Details
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      component="label"
+                      startIcon={<InsertDriveFileIcon />}
+                      sx={{
+                        display: { md: "flex" },
+                        textTransform: "none",
+                        backgroundColor: "#EEEFF1",
+                        color: "black",
+                        borderRadius: "18px",
+                      }}
+                    >
+                      Upload Resume
+                      <Input
+                        type="file"
+                        accept=".pdf"
+                        hidden
+                        onChange={(e) => {
+                          handleFileChange(e, "resume"), setEditMode(true);
+                        }}
+                      />
+                    </Button>
+                  </>
+                )}
+              </Stack>
+            </Paper>
+          </Container>
+        </Box>
+      )}
     </MainLayout>
   );
 }
