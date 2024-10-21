@@ -1025,7 +1025,8 @@ import BusinessIcon from "@mui/icons-material/Business";
 export default function HomePage() {
   const router = useRouter();
 
-  const [currentUser, setCurrentUser] = useState({});
+  // const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState(null);
   const [companies, setCompanies] = useState([]); // All companies data
   const [searchTerm, setSearchTerm] = useState(""); // Search term
   const [filteredCompanies, setFilteredCompanies] = useState([]); // Filtered companies
@@ -1079,6 +1080,8 @@ export default function HomePage() {
       setFilteredCompanies([]);
     }
   };
+
+  console.log(currentUser, "currentUser");
 
   // Filter companies based on search term
   const handleSearchChange = (e) => {
@@ -1327,7 +1330,7 @@ export default function HomePage() {
                 variant="contained"
                 color="primary"
                 sx={{
-                  display: { xs: "block", sm: "none", md: "none", lg: "none" },
+                  display: { xs: "block", sm: "block", md: "none", lg: "none" },
                   backgroundColor: "#6756f0b8", // Button color as per the image
                   borderRadius: "24px", // Rounded button style
                   //   padding: "8px 24px",
